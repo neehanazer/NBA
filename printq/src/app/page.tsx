@@ -1,21 +1,13 @@
 'use client';
 
 import React from 'react';
-import { Typography, Button, Space, Row, Col, Card, Tag, Divider, Statistic, Badge } from 'antd';
+import { Typography, Button, Space, Row, Col, Card, Tag } from 'antd';
 import {
-  PrinterOutlined,
   CloudUploadOutlined,
-  ThunderboltOutlined,
-  DollarOutlined,
-  SafetyCertificateOutlined,
   ClockCircleOutlined,
-  RightOutlined,
-  CheckCircleTwoTone,
-  FilePdfOutlined,
-  BookOutlined,
-  BankOutlined,
-  TeamOutlined,
+  ThunderboltOutlined,
   EnvironmentOutlined,
+  ArrowRightOutlined,
 } from '@ant-design/icons';
 import Link from 'next/link';
 
@@ -23,406 +15,315 @@ const { Title, Paragraph, Text } = Typography;
 
 export default function HomePage() {
   return (
-    <div style={{ padding: '8px 0 48px' }}>
-      {/* Collegiate Hero Section */}
+    <div style={{ maxWidth: 1040, margin: '0 auto', padding: '16px 0 48px' }}>
+      {/* Sleek Minimalist Hero */}
       <div
         className="fisat-hero-card"
         style={{
           borderRadius: 24,
-          padding: '56px 48px',
+          padding: '56px 40px',
           color: '#FFFFFF',
-          boxShadow: '0 20px 40px -15px rgba(11, 37, 69, 0.4)',
-          marginBottom: 40,
+          textAlign: 'center',
+          boxShadow: '0 20px 40px -15px rgba(11, 37, 69, 0.35)',
+          marginBottom: 32,
+          position: 'relative',
         }}
       >
-        <Row gutter={[32, 32]} align="middle">
-          <Col xs={24} lg={15}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 20 }}>
-              <img
-                src="/fisat-official-logo.png"
-                alt="FISAT Official Crest"
-                style={{
-                  width: 56,
-                  height: 56,
-                  objectFit: 'contain',
-                  borderRadius: 12,
-                  background: '#FFFFFF',
-                  padding: 3,
-                  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.3)',
-                  border: '2px solid rgba(212, 175, 55, 0.6)',
-                  flexShrink: 0,
-                }}
-              />
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
-                  <span className="fisat-gold-pill">
-                    <BankOutlined /> FISAT Central Reprographics
-                  </span>
-                  <Tag color="#134074" style={{ borderRadius: 12, border: 'none', color: '#E2E8F0', padding: '2px 10px', margin: 0 }}>
-                    Hormis Nagar Campus
-                  </Tag>
-                </div>
-                <span style={{ fontSize: 11, color: '#CBD5E1', letterSpacing: '0.4px', fontWeight: 600 }}>
-                  FEDERAL INSTITUTE OF SCIENCE AND TECHNOLOGY • ESTD. 2002
-                </span>
-              </div>
-            </div>
-
-            <Title
-              level={1}
-              style={{
-                color: '#FFFFFF',
-                fontSize: 40,
-                fontWeight: 900,
-                lineHeight: 1.18,
-                marginBottom: 16,
-                letterSpacing: '-0.5px',
-              }}
-            >
-              The Official Automated Print Hub for{' '}
-              <span style={{ color: '#D4AF37' }}>FISAT College</span>
-            </Title>
-
-            <Paragraph
-              style={{
-                color: '#CBD5E1',
-                fontSize: 16,
-                lineHeight: 1.65,
-                maxWidth: 640,
-                marginBottom: 28,
-              }}
-            >
-              No more manual WhatsApp file forwarding or waiting in crowded lines. Upload your lab records,
-              seminar papers, and major project reports. Our automated pipeline scans color pages, applies student
-              duplex discounts, and queues your document for high-speed pickup.
-            </Paragraph>
-
-            <Space size="middle" wrap>
-              <Link href="/upload">
-                <Button
-                  type="primary"
-                  size="large"
-                  icon={<CloudUploadOutlined />}
-                  style={{
-                    height: 48,
-                    padding: '0 32px',
-                    fontSize: 15,
-                    borderRadius: 10,
-                    background: '#D4AF37',
-                    borderColor: '#D4AF37',
-                    color: '#0B2545',
-                    fontWeight: 800,
-                    boxShadow: '0 8px 20px rgba(212, 175, 55, 0.3)',
-                  }}
-                >
-                  Upload &amp; Print Document
-                </Button>
-              </Link>
-
-              <Link href="/dashboard">
-                <Button
-                  size="large"
-                  ghost
-                  style={{
-                    height: 48,
-                    padding: '0 24px',
-                    fontSize: 15,
-                    borderRadius: 10,
-                    fontWeight: 700,
-                    borderColor: 'rgba(255, 255, 255, 0.5)',
-                  }}
-                >
-                  View My Print Queue
-                </Button>
-              </Link>
-            </Space>
-          </Col>
-
-          {/* Quick Info / Spooler Telemetry Card */}
-          <Col xs={24} lg={9}>
-            <div
-              style={{
-                background: 'rgba(255, 255, 255, 0.08)',
-                backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(255, 255, 255, 0.15)',
-                borderRadius: 20,
-                padding: '24px',
-              }}
-            >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-                <span style={{ fontSize: 13, fontWeight: 700, color: '#F3C68F', letterSpacing: 0.5 }}>
-                  CAMPUS PRINT TERMINAL STATUS
-                </span>
-                <span className="fisat-tag-live">
-                  <span className="fisat-pulse-dot" />
-                  <span style={{ fontSize: 11, color: '#10B981', fontWeight: 600 }}>Active</span>
-                </span>
-              </div>
-
-              <Space direction="vertical" size={14} style={{ width: '100%' }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: 10 }}>
-                  <Text style={{ color: '#94A3B8', fontSize: 13 }}>Primary Counter</Text>
-                  <Text strong style={{ color: '#FFFFFF', fontSize: 13 }}>Main Block Ground Floor</Text>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: 10 }}>
-                  <Text style={{ color: '#94A3B8', fontSize: 13 }}>Standard B&amp;W Tariff</Text>
-                  <Text strong style={{ color: '#FFFFFF', fontSize: 13 }}>₹2.00 / page</Text>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.1)', paddingBottom: 10 }}>
-                  <Text style={{ color: '#94A3B8', fontSize: 13 }}>Color Ink Tariff</Text>
-                  <Text strong style={{ color: '#F3C68F', fontSize: 13 }}>₹5.00 / page</Text>
-                </div>
-                <div style={{ display: 'flex', justifyContent: 'space-between', paddingBottom: 4 }}>
-                  <Text style={{ color: '#94A3B8', fontSize: 13 }}>Double-Sided Discount</Text>
-                  <Tag color="green" style={{ margin: 0, fontWeight: 700 }}>10% Eco Savings</Tag>
-                </div>
-              </Space>
-
-              <div
-                style={{
-                  marginTop: 18,
-                  padding: '10px 14px',
-                  borderRadius: 10,
-                  background: 'rgba(11, 37, 69, 0.6)',
-                  border: '1px solid rgba(212, 175, 55, 0.3)',
-                  display: 'flex',
-                  alignItems: 'center',
-                  gap: 10,
-                }}
-              >
-                <ThunderboltOutlined style={{ color: '#D4AF37', fontSize: 18 }} />
-                <span style={{ fontSize: 12, color: '#E2E8F0' }}>
-                  Average wait time today: <strong>~4 minutes</strong> per job
-                </span>
-              </div>
-            </div>
-          </Col>
-        </Row>
-      </div>
-
-      {/* Campus Facility Highlights */}
-      <div style={{ marginBottom: 40 }}>
-        <div style={{ textAlign: 'center', marginBottom: 32 }}>
-          <Tag color="blue" style={{ marginBottom: 8, fontWeight: 700 }}>
-            COLLEGE SERVICES &amp; TARIFFS
+        {/* Institutional Pill Badge */}
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
+          <img
+            src="/fisat-official-logo.png"
+            alt="FISAT Official Crest"
+            style={{
+              width: 38,
+              height: 38,
+              objectFit: 'contain',
+              borderRadius: 8,
+              background: '#FFFFFF',
+              padding: 2,
+              border: '1px solid rgba(255,255,255,0.3)',
+            }}
+          />
+          <span className="fisat-gold-pill" style={{ letterSpacing: '0.6px' }}>
+            FISAT REPROGRAPHICS
+          </span>
+          <Tag color="#134074" style={{ borderRadius: 12, border: 'none', color: '#E2E8F0', padding: '2px 10px', margin: 0 }}>
+            Counter 1 • Main Block
           </Tag>
-          <Title level={2} style={{ color: '#0B2545', margin: 0 }}>
-            Built for FISAT Academic Requirements
-          </Title>
         </div>
 
-        <Row gutter={[24, 24]}>
-          <Col xs={24} md={8}>
-            <Card
-              hoverable
-              className="fisat-card-hover"
-              style={{ borderRadius: 16, height: '100%' }}
-            >
-              <div
-                style={{
-                  width: 48,
-                  height: 48,
-                  borderRadius: 12,
-                  background: '#EEF2F6',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: '#0B2545',
-                  fontSize: 22,
-                  marginBottom: 16,
-                }}
-              >
-                <FilePdfOutlined />
-              </div>
-              <Title level={4} style={{ color: '#0B2545', marginBottom: 8 }}>
-                Lab Manuals &amp; Records
-              </Title>
-              <Text type="secondary" style={{ lineHeight: 1.6 }}>
-                Automated detection for B&amp;W code text and color circuit diagrams. No more manual counting
-                of color pages at the shop desk.
-              </Text>
-            </Card>
-          </Col>
+        {/* Punchy, Minimal Title */}
+        <Title
+          level={1}
+          style={{
+            color: '#FFFFFF',
+            fontSize: 42,
+            fontWeight: 900,
+            lineHeight: 1.15,
+            marginBottom: 12,
+            letterSpacing: '-0.5px',
+          }}
+        >
+          Campus Printing, <span style={{ color: '#D4AF37' }}>Simplified.</span>
+        </Title>
 
-          <Col xs={24} md={8}>
-            <Card
-              hoverable
-              className="fisat-card-hover"
-              style={{ borderRadius: 16, height: '100%' }}
-            >
-              <div
-                style={{
-                  width: 48,
-                  height: 48,
-                  borderRadius: 12,
-                  background: '#FEF3C7',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: '#D97706',
-                  fontSize: 22,
-                  marginBottom: 16,
-                }}
-              >
-                <BookOutlined />
-              </div>
-              <Title level={4} style={{ color: '#0B2545', marginBottom: 8 }}>
-                Project &amp; Seminar Reports
-              </Title>
-              <Text type="secondary" style={{ lineHeight: 1.6 }}>
-                Supports multi-copy printing with duplex pagination according to KTU/Autonomous guidelines.
-                Includes paper-saving duplex discounts.
-              </Text>
-            </Card>
-          </Col>
+        <Paragraph
+          style={{
+            color: '#CBD5E1',
+            fontSize: 16,
+            maxWidth: 560,
+            margin: '0 auto 32px',
+            lineHeight: 1.5,
+          }}
+        >
+          Send your academic documents to the college print queue online and collect your prints at Counter 1 without the line.
+        </Paragraph>
 
-          <Col xs={24} md={8}>
-            <Card
-              hoverable
-              className="fisat-card-hover"
-              style={{ borderRadius: 16, height: '100%' }}
+        {/* Primary Actions */}
+        <Space size="middle" wrap style={{ justifyContent: 'center', marginBottom: 36 }}>
+          <Link href="/upload">
+            <Button
+              type="primary"
+              size="large"
+              icon={<CloudUploadOutlined />}
+              style={{
+                height: 50,
+                padding: '0 32px',
+                fontSize: 16,
+                borderRadius: 12,
+                background: '#D4AF37',
+                borderColor: '#D4AF37',
+                color: '#0B2545',
+                fontWeight: 800,
+                boxShadow: '0 8px 24px rgba(212, 175, 55, 0.35)',
+              }}
             >
-              <div
-                style={{
-                  width: 48,
-                  height: 48,
-                  borderRadius: 12,
-                  background: '#ECFDF5',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: '#10B981',
-                  fontSize: 22,
-                  marginBottom: 16,
-                }}
-              >
-                <ClockCircleOutlined />
-              </div>
-              <Title level={4} style={{ color: '#0B2545', marginBottom: 8 }}>
-                Strict First-Come, First-Served
-              </Title>
-              <Text type="secondary" style={{ lineHeight: 1.6 }}>
-                Every verified student submission is placed in a timestamped FIFO queue. Watch your position
-                move forward in real-time from anywhere on campus.
-              </Text>
-            </Card>
-          </Col>
-        </Row>
+              Print Document
+            </Button>
+          </Link>
+
+          <Link href="/dashboard">
+            <Button
+              size="large"
+              ghost
+              icon={<ClockCircleOutlined />}
+              style={{
+                height: 50,
+                padding: '0 26px',
+                fontSize: 15,
+                borderRadius: 12,
+                fontWeight: 700,
+                borderColor: 'rgba(255, 255, 255, 0.4)',
+              }}
+            >
+              Track Queue
+            </Button>
+          </Link>
+        </Space>
+
+        {/* Minimal Live Status Bar */}
+        <div
+          style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: 24,
+            background: 'rgba(255, 255, 255, 0.08)',
+            backdropFilter: 'blur(12px)',
+            border: '1px solid rgba(255, 255, 255, 0.12)',
+            borderRadius: 9999,
+            padding: '8px 24px',
+            fontSize: 13,
+            color: '#E2E8F0',
+            flexWrap: 'wrap',
+            justifyContent: 'center',
+          }}
+        >
+          <span style={{ display: 'inline-flex', alignItems: 'center', gap: 6 }}>
+            <span className="fisat-pulse-dot" /> Spooler Online
+          </span>
+          <span style={{ color: 'rgba(255,255,255,0.25)' }}>•</span>
+          <span>₹2.00 B&amp;W</span>
+          <span style={{ color: 'rgba(255,255,255,0.25)' }}>•</span>
+          <span style={{ color: '#F3C68F', fontWeight: 600 }}>₹5.00 Color</span>
+          <span style={{ color: 'rgba(255,255,255,0.25)' }}>•</span>
+          <span>10% Duplex Savings</span>
+        </div>
       </div>
 
-      {/* 4-Step Student Workflow Bar */}
+      {/* Clean 3-Step Flow */}
+      <Row gutter={[20, 20]} style={{ marginBottom: 32 }}>
+        <Col xs={24} md={8}>
+          <Card
+            bordered={false}
+            className="fisat-card-hover"
+            style={{
+              borderRadius: 16,
+              background: '#FFFFFF',
+              boxShadow: '0 2px 10px rgba(11, 37, 69, 0.04)',
+              border: '1px solid #E2E8F0',
+              height: '100%',
+              padding: '8px',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+              <div
+                style={{
+                  width: 44,
+                  height: 44,
+                  borderRadius: 12,
+                  background: '#EEF2F6',
+                  color: '#0B2545',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: 20,
+                  flexShrink: 0,
+                }}
+              >
+                <CloudUploadOutlined />
+              </div>
+              <div>
+                <div style={{ fontSize: 11, fontWeight: 700, color: '#94A3B8', textTransform: 'uppercase' }}>Step 1</div>
+                <Text strong style={{ fontSize: 16, color: '#0B2545' }}>Upload File</Text>
+                <div style={{ fontSize: 13, color: '#64748B', marginTop: 2 }}>PDF, Word, or PPTX</div>
+              </div>
+            </div>
+          </Card>
+        </Col>
+
+        <Col xs={24} md={8}>
+          <Card
+            bordered={false}
+            className="fisat-card-hover"
+            style={{
+              borderRadius: 16,
+              background: '#FFFFFF',
+              boxShadow: '0 2px 10px rgba(11, 37, 69, 0.04)',
+              border: '1px solid #E2E8F0',
+              height: '100%',
+              padding: '8px',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+              <div
+                style={{
+                  width: 44,
+                  height: 44,
+                  borderRadius: 12,
+                  background: '#FEF3C7',
+                  color: '#D97706',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: 20,
+                  flexShrink: 0,
+                }}
+              >
+                <ThunderboltOutlined />
+              </div>
+              <div>
+                <div style={{ fontSize: 11, fontWeight: 700, color: '#94A3B8', textTransform: 'uppercase' }}>Step 2</div>
+                <Text strong style={{ fontSize: 16, color: '#0B2545' }}>Auto-Pricing</Text>
+                <div style={{ fontSize: 13, color: '#64748B', marginTop: 2 }}>Color &amp; duplex detected</div>
+              </div>
+            </div>
+          </Card>
+        </Col>
+
+        <Col xs={24} md={8}>
+          <Card
+            bordered={false}
+            className="fisat-card-hover"
+            style={{
+              borderRadius: 16,
+              background: '#FFFFFF',
+              boxShadow: '0 2px 10px rgba(11, 37, 69, 0.04)',
+              border: '1px solid #E2E8F0',
+              height: '100%',
+              padding: '8px',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+              <div
+                style={{
+                  width: 44,
+                  height: 44,
+                  borderRadius: 12,
+                  background: '#ECFDF5',
+                  color: '#10B981',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  fontSize: 20,
+                  flexShrink: 0,
+                }}
+              >
+                <EnvironmentOutlined />
+              </div>
+              <div>
+                <div style={{ fontSize: 11, fontWeight: 700, color: '#94A3B8', textTransform: 'uppercase' }}>Step 3</div>
+                <Text strong style={{ fontSize: 16, color: '#0B2545' }}>Pickup Prints</Text>
+                <div style={{ fontSize: 13, color: '#64748B', marginTop: 2 }}>Main Block Counter 1</div>
+              </div>
+            </div>
+          </Card>
+        </Col>
+      </Row>
+
+      {/* Minimalist Subsidized Rates & Information Strip */}
       <Card
         style={{
           borderRadius: 20,
           background: '#FFFFFF',
-          padding: '20px 24px',
-          boxShadow: '0 4px 20px -4px rgba(11, 37, 69, 0.05)',
+          border: '1px solid #E2E8F0',
+          boxShadow: '0 2px 12px rgba(11, 37, 69, 0.04)',
+          padding: '12px 16px',
         }}
       >
-        <div style={{ textAlign: 'center', marginBottom: 24 }}>
-          <Title level={4} style={{ color: '#0B2545', margin: 0 }}>
-            How to Use the FISAT PrintQ System
-          </Title>
-          <Text type="secondary">From upload to counter pickup in minutes</Text>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 20 }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <img
+              src="/fisat-official-logo.png"
+              alt="FISAT"
+              style={{ width: 40, height: 40, objectFit: 'contain' }}
+            />
+            <div>
+              <div style={{ fontWeight: 800, color: '#0B2545', fontSize: 15 }}>
+                FISAT Central Reprographics Facility
+              </div>
+              <div style={{ fontSize: 12, color: '#64748B' }}>
+                Main Block Ground Floor • Mon–Sat, 8:30 AM – 5:30 PM
+              </div>
+            </div>
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: 24, flexWrap: 'wrap' }}>
+            <div style={{ textAlign: 'right' }}>
+              <div style={{ fontSize: 11, color: '#94A3B8', fontWeight: 600 }}>BLACK &amp; WHITE</div>
+              <div style={{ fontSize: 16, fontWeight: 800, color: '#0B2545' }}>₹2.00 / page</div>
+            </div>
+            <div style={{ height: 28, width: 1, background: '#E2E8F0' }} />
+            <div style={{ textAlign: 'right' }}>
+              <div style={{ fontSize: 11, color: '#94A3B8', fontWeight: 600 }}>COLOR</div>
+              <div style={{ fontSize: 16, fontWeight: 800, color: '#D97706' }}>₹5.00 / page</div>
+            </div>
+            <div style={{ height: 28, width: 1, background: '#E2E8F0' }} />
+            <Link href="/upload">
+              <Button
+                type="primary"
+                style={{
+                  background: '#0B2545',
+                  borderColor: '#0B2545',
+                  borderRadius: 8,
+                  fontWeight: 700,
+                }}
+                icon={<ArrowRightOutlined />}
+              >
+                Start Printing
+              </Button>
+            </Link>
+          </div>
         </div>
-
-        <Row gutter={[20, 20]} align="middle">
-          <Col xs={24} sm={6} style={{ textAlign: 'center' }}>
-            <div
-              style={{
-                width: 40,
-                height: 40,
-                borderRadius: '50%',
-                background: '#0B2545',
-                color: '#D4AF37',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: 18,
-                fontWeight: 800,
-                margin: '0 auto 10px',
-              }}
-            >
-              1
-            </div>
-            <Text strong style={{ fontSize: 14 }}>Upload Document</Text>
-            <div style={{ fontSize: 12, color: '#64748B', marginTop: 2 }}>
-              PDF, Word, PPTX or Excel
-            </div>
-          </Col>
-
-          <Col xs={24} sm={6} style={{ textAlign: 'center' }}>
-            <div
-              style={{
-                width: 40,
-                height: 40,
-                borderRadius: '50%',
-                background: '#0B2545',
-                color: '#D4AF37',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: 18,
-                fontWeight: 800,
-                margin: '0 auto 10px',
-              }}
-            >
-              2
-            </div>
-            <Text strong style={{ fontSize: 14 }}>Automatic Analysis</Text>
-            <div style={{ fontSize: 12, color: '#64748B', marginTop: 2 }}>
-              Page count &amp; color detected
-            </div>
-          </Col>
-
-          <Col xs={24} sm={6} style={{ textAlign: 'center' }}>
-            <div
-              style={{
-                width: 40,
-                height: 40,
-                borderRadius: '50%',
-                background: '#0B2545',
-                color: '#D4AF37',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: 18,
-                fontWeight: 800,
-                margin: '0 auto 10px',
-              }}
-            >
-              3
-            </div>
-            <Text strong style={{ fontSize: 14 }}>Confirm &amp; Queue</Text>
-            <div style={{ fontSize: 12, color: '#64748B', marginTop: 2 }}>
-              Pay online or at counter
-            </div>
-          </Col>
-
-          <Col xs={24} sm={6} style={{ textAlign: 'center' }}>
-            <div
-              style={{
-                width: 40,
-                height: 40,
-                borderRadius: '50%',
-                background: '#10B981',
-                color: '#FFFFFF',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: 18,
-                fontWeight: 800,
-                margin: '0 auto 10px',
-              }}
-            >
-              4
-            </div>
-            <Text strong style={{ fontSize: 14 }}>Pick Up Prints</Text>
-            <div style={{ fontSize: 12, color: '#64748B', marginTop: 2 }}>
-              Collect from Main Block Counter
-            </div>
-          </Col>
-        </Row>
       </Card>
     </div>
   );
