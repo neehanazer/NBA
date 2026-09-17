@@ -27,18 +27,18 @@ export default function Providers({ children }: { children: React.ReactNode }) {
             theme={{
               algorithm: antdTheme.defaultAlgorithm,
               token: {
-                colorPrimary: '#0B2545', // FISAT Deep Navy
-                colorInfo: '#134074', // FISAT Blue
-                colorSuccess: '#10B981', // Emerald Success
-                colorWarning: '#D97706', // Warm Amber
+                colorPrimary: '#47b2e4', // Arsha Sky Blue Accent
+                colorInfo: '#37517e', // Arsha Deep Indigo Heading
+                colorSuccess: '#10B981', // Success Emerald
+                colorWarning: '#D97706', // Amber Warning
                 colorError: '#EF4444',
-                colorTextBase: '#0F172A',
+                colorTextBase: '#444444',
                 colorBgBase: '#FFFFFF',
-                borderRadius: 10,
+                borderRadius: 8,
                 borderRadiusLG: 14,
                 borderRadiusSM: 6,
                 fontFamily:
-                  "'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+                  "'Open Sans', 'Jost', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
               },
               components: {
                 Button: {
@@ -46,16 +46,16 @@ export default function Providers({ children }: { children: React.ReactNode }) {
                   borderRadius: 8,
                   fontWeight: 600,
                   primaryColor: '#FFFFFF',
-                  primaryShadow: '0 4px 14px 0 rgba(11, 37, 69, 0.25)',
+                  primaryShadow: '0 4px 15px 0 rgba(71, 178, 228, 0.35)',
                 },
                 Table: {
                   headerBg: '#F8FAFC',
-                  headerColor: '#0B2545',
+                  headerColor: '#37517e',
                   rowHoverBg: '#F1F5F9',
                   borderColor: '#E2E8F0',
                 },
                 Steps: {
-                  colorPrimary: '#0B2545',
+                  colorPrimary: '#47b2e4',
                   iconSize: 36,
                 },
                 Card: {
@@ -64,9 +64,9 @@ export default function Providers({ children }: { children: React.ReactNode }) {
                   colorBorderSecondary: '#E2E8F0',
                 },
                 Tabs: {
-                  itemSelectedColor: '#0B2545',
-                  inkBarColor: '#D4AF37',
-                  itemHoverColor: '#134074',
+                  itemSelectedColor: '#37517e',
+                  inkBarColor: '#47b2e4',
+                  itemHoverColor: '#47b2e4',
                 },
               },
             }}

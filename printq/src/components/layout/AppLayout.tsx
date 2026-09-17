@@ -113,55 +113,48 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         </div>
       </div>
 
-      {/* Main Header */}
+      {/* Arsha-Style Main Header */}
       <Header
         style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          background: '#FFFFFF',
-          borderBottom: '1px solid #E2E8F0',
-          padding: '0 28px',
+          background: '#37517e',
+          borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+          padding: '0 32px',
           position: 'sticky',
           top: 0,
           zIndex: 1000,
           height: 72,
-          boxShadow: '0 4px 20px -2px rgba(11, 37, 69, 0.05)',
+          boxShadow: '0 2px 15px rgba(0, 0, 0, 0.1)',
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 36 }}>
-          {/* Official FISAT Logo & Brand */}
+          {/* Official FISAT Logo & Brand (Arsha Style) */}
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
             <img
               src="/fisat-official-logo.png"
               alt="FISAT Official Logo"
               style={{
-                width: 48,
-                height: 48,
+                width: 44,
+                height: 44,
                 objectFit: 'contain',
                 borderRadius: 10,
                 background: '#FFFFFF',
                 padding: 2,
-                boxShadow: '0 4px 12px rgba(11, 37, 69, 0.12)',
-                border: '1px solid #CBD5E1',
+                boxShadow: '0 2px 10px rgba(0, 0, 0, 0.2)',
                 flexShrink: 0,
               }}
             />
 
             <div style={{ display: 'flex', flexDirection: 'column' }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 6, lineHeight: 1.1 }}>
-                <span style={{ fontSize: 20, fontWeight: 900, color: '#0B2545', letterSpacing: -0.5 }}>
-                  FISAT
-                </span>
-                <span style={{ fontSize: 20, fontWeight: 800, color: '#134074' }}>
-                  Print<span style={{ color: '#D4AF37' }}>Q</span>
-                </span>
-                <span className="fisat-gold-pill" style={{ marginLeft: 4 }}>
-                  FCFS Hub
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, lineHeight: 1.1 }}>
+                <span style={{ fontSize: 22, fontWeight: 700, color: '#FFFFFF', fontFamily: "'Jost', sans-serif", letterSpacing: 1.5, textTransform: 'uppercase' }}>
+                  FISAT <span style={{ color: '#47b2e4' }}>PRINTQ</span>
                 </span>
               </div>
-              <span style={{ fontSize: 10, color: '#64748B', fontWeight: 600, letterSpacing: 0.3, marginTop: 2 }}>
-                CENTRAL PRINTING &amp; BINDING FACILITY
+              <span style={{ fontSize: 10, color: 'rgba(255, 255, 255, 0.7)', fontWeight: 500, letterSpacing: 0.5, marginTop: 2, fontFamily: "'Poppins', sans-serif" }}>
+                CENTRAL REPROGRAPHICS
               </span>
             </div>
           </Link>
@@ -169,14 +162,16 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           {/* Navigation Links */}
           <Menu
             mode="horizontal"
+            theme="dark"
             selectedKeys={[pathname]}
             items={menuItems}
             style={{
               borderBottom: 'none',
               background: 'transparent',
               minWidth: 320,
-              fontSize: 14,
-              fontWeight: 600,
+              fontSize: 15,
+              fontWeight: 500,
+              fontFamily: "'Poppins', sans-serif",
             }}
           />
         </div>
@@ -185,41 +180,54 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         <Space size="middle">
           {status === 'authenticated' ? (
             <Dropdown menu={{ items: userMenuItems }} trigger={['click']} placement="bottomRight">
-              <Space style={{ cursor: 'pointer', padding: '4px 12px', borderRadius: 8, background: '#F8FAFC', border: '1px solid #E2E8F0' }}>
+              <Space style={{ cursor: 'pointer', padding: '4px 14px', borderRadius: 50, background: 'rgba(255, 255, 255, 0.1)', border: '1px solid rgba(255, 255, 255, 0.2)' }}>
                 <Avatar
-                  style={{ backgroundColor: '#0B2545', fontWeight: 700 }}
+                  style={{ backgroundColor: '#47b2e4', fontWeight: 700 }}
                   icon={<UserOutlined />}
                 >
                   {session.user?.name?.[0]?.toUpperCase()}
                 </Avatar>
                 <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.2 }}>
-                  <Text strong style={{ fontSize: 13, color: '#0B2545' }}>
+                  <Text strong style={{ fontSize: 13, color: '#FFFFFF' }}>
                     {session.user?.name}
                   </Text>
-                  <Text type="secondary" style={{ fontSize: 11 }}>
+                  <Text style={{ fontSize: 11, color: 'rgba(255, 255, 255, 0.7)' }}>
                     {role === 'OPERATOR' ? 'Shop Operator' : 'Student / Faculty'}
                   </Text>
                 </div>
               </Space>
             </Dropdown>
           ) : (
-            <Space size="small">
+            <Space size="middle">
               <Link href="/login">
-                <Button type="default" icon={<LoginOutlined />} style={{ borderRadius: 8 }}>
+                <Button
+                  type="text"
+                  icon={<LoginOutlined />}
+                  style={{
+                    color: '#FFFFFF',
+                    fontWeight: 600,
+                    fontFamily: "'Jost', sans-serif",
+                    fontSize: 15,
+                  }}
+                >
                   Sign In
                 </Button>
               </Link>
-              <Link href="/register">
+              <Link href="/upload">
                 <Button
-                  type="primary"
+                  className="btn-arsha-primary"
                   style={{
-                    background: '#0B2545',
-                    borderColor: '#0B2545',
-                    borderRadius: 8,
-                    fontWeight: 700,
+                    height: 40,
+                    padding: '0 24px',
+                    borderRadius: 50,
+                    fontWeight: 600,
+                    fontSize: 14,
+                    background: '#47b2e4',
+                    borderColor: '#47b2e4',
+                    color: '#FFFFFF',
                   }}
                 >
-                  Register Campus ID
+                  Get Started
                 </Button>
               </Link>
             </Space>
@@ -232,13 +240,14 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         {children}
       </Content>
 
-      {/* Collegiate Footer */}
+      {/* Arsha-Style Footer */}
       <Footer
         style={{
-          background: '#FFFFFF',
-          borderTop: '1px solid #E2E8F0',
-          padding: '32px 24px 20px',
-          color: '#475569',
+          background: '#37517e',
+          borderTop: '1px solid rgba(255, 255, 255, 0.1)',
+          padding: '40px 24px 28px',
+          color: '#e2e8f0',
+          fontFamily: "'Open Sans', sans-serif",
         }}
       >
         <div style={{ maxWidth: 1240, margin: '0 auto' }}>
@@ -250,40 +259,40 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               flexWrap: 'wrap',
               gap: 20,
               paddingBottom: 24,
-              borderBottom: '1px solid #F1F5F9',
+              borderBottom: '1px solid rgba(255, 255, 255, 0.12)',
             }}
           >
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
               <img
                 src="/fisat-official-logo.png"
                 alt="FISAT Emblem"
                 style={{
-                  width: 38,
-                  height: 38,
+                  width: 42,
+                  height: 42,
                   objectFit: 'contain',
                   borderRadius: 8,
                   background: '#FFFFFF',
                   padding: 2,
-                  border: '1px solid #E2E8F0',
-                  boxShadow: '0 2px 6px rgba(0,0,0,0.08)',
+                  border: '1px solid rgba(255, 255, 255, 0.2)',
+                  boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
                 }}
               />
               <div>
-                <strong style={{ color: '#0B2545', fontSize: 15 }}>
-                  FISAT Reprographic &amp; Central Print Center
+                <strong style={{ color: '#FFFFFF', fontSize: 16, fontFamily: "'Jost', sans-serif", letterSpacing: 0.5 }}>
+                  FISAT REPROGRAPHIC &amp; CENTRAL PRINT CENTER
                 </strong>
-                <div style={{ fontSize: 12, color: '#64748B' }}>
+                <div style={{ fontSize: 13, color: 'rgba(255, 255, 255, 0.7)', marginTop: 2 }}>
                   Federal Institute of Science And Technology (Autonomous), Hormis Nagar, Mookkannoor, Angamaly, Kerala
                 </div>
               </div>
             </div>
 
-            <Space size="large" style={{ fontSize: 13 }}>
+            <Space size="large" style={{ fontSize: 13, color: '#e2e8f0' }}>
               <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                <EnvironmentOutlined style={{ color: '#134074' }} /> Ground Floor, Main Block
+                <EnvironmentOutlined style={{ color: '#47b2e4' }} /> Ground Floor, Main Block
               </span>
               <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-                <ThunderboltOutlined style={{ color: '#D4AF37' }} /> Operating: Mon – Sat (8:30 AM – 5:30 PM)
+                <ThunderboltOutlined style={{ color: '#47b2e4' }} /> Operating: Mon – Sat (8:30 AM – 5:30 PM)
               </span>
             </Space>
           </div>
@@ -293,18 +302,18 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
               display: 'flex',
               justifyContent: 'space-between',
               alignItems: 'center',
-              paddingTop: 16,
-              fontSize: 12,
-              color: '#94A3B8',
+              paddingTop: 20,
+              fontSize: 13,
+              color: 'rgba(255, 255, 255, 0.65)',
               flexWrap: 'wrap',
               gap: 12,
             }}
           >
             <div>
-              &copy; {new Date().getFullYear()} FISAT PrintQ System. Designed for student lab manuals, assignments, seminars &amp; project reports.
+              &copy; {new Date().getFullYear()} <strong style={{ color: '#FFFFFF' }}>FISAT PrintQ</strong>. All Rights Reserved.
             </div>
             <div>
-              Automated First-Come, First-Served Queue • Ghostscript Color Analyzer • CUPS High-Speed Dispatch
+              Powered by <span style={{ color: '#47b2e4', fontWeight: 600 }}>Arsha UI Architecture</span> • Automated FCFS Print Spooler
             </div>
           </div>
         </div>
