@@ -20,6 +20,21 @@ export default function UploadPage() {
       />
 
       <div style={{ marginBottom: 28, textAlign: 'center' }}>
+        <img
+          src="/fisat-official-logo.png"
+          alt="FISAT Official Logo"
+          style={{
+            width: 58,
+            height: 58,
+            objectFit: 'contain',
+            borderRadius: 12,
+            background: '#FFFFFF',
+            padding: 3,
+            border: '1px solid #CBD5E1',
+            boxShadow: '0 4px 12px rgba(11, 37, 69, 0.08)',
+            marginBottom: 10,
+          }}
+        />
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 8, marginBottom: 8 }}>
           <span className="fisat-gold-pill">
             <BankOutlined /> FISAT Central Reprographics

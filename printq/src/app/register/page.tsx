@@ -70,24 +70,21 @@ export default function RegisterPage() {
         }}
       >
         <div style={{ textAlign: 'center', marginBottom: 24 }}>
-          <div
+          <img
+            src="/fisat-official-logo.png"
+            alt="FISAT Official Logo"
             style={{
-              width: 54,
-              height: 54,
-              borderRadius: 16,
-              background: 'linear-gradient(135deg, #0B2545 0%, #134074 100%)',
-              border: '2px solid #D4AF37',
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#F3C68F',
-              fontSize: 26,
+              width: 72,
+              height: 72,
+              objectFit: 'contain',
+              borderRadius: 14,
+              background: '#FFFFFF',
+              padding: 4,
               marginBottom: 12,
-              boxShadow: '0 8px 16px rgba(11, 37, 69, 0.2)',
+              boxShadow: '0 8px 20px rgba(11, 37, 69, 0.12)',
+              border: '2px solid #E2E8F0',
             }}
-          >
-            <PrinterOutlined />
-          </div>
+          />
           <div>
             <span className="fisat-gold-pill" style={{ marginBottom: 6 }}>
               <BankOutlined /> FISAT Central Reprographics

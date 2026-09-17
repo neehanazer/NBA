@@ -61,24 +61,21 @@ export default function LoginPage() {
         }}
       >
         <div style={{ textAlign: 'center', marginBottom: 28 }}>
-          <div
+          <img
+            src="/fisat-official-logo.png"
+            alt="FISAT Official Logo"
             style={{
-              width: 58,
-              height: 58,
-              borderRadius: 16,
-              background: 'linear-gradient(135deg, #0B2545 0%, #134074 100%)',
-              border: '2px solid #D4AF37',
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              color: '#F3C68F',
-              fontSize: 28,
+              width: 72,
+              height: 72,
+              objectFit: 'contain',
+              borderRadius: 14,
+              background: '#FFFFFF',
+              padding: 4,
               marginBottom: 14,
-              boxShadow: '0 8px 16px rgba(11, 37, 69, 0.2)',
+              boxShadow: '0 8px 20px rgba(11, 37, 69, 0.12)',
+              border: '2px solid #E2E8F0',
             }}
-          >
-            <PrinterOutlined />
-          </div>
+          />
           <div>
             <span className="fisat-gold-pill" style={{ marginBottom: 8 }}>
               <BankOutlined /> FISAT Autonomous

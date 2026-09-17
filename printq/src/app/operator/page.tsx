@@ -47,13 +47,30 @@ export default function OperatorPage() {
           gap: 16,
         }}
       >
-        <div>
-          <Title level={2} style={{ color: '#1B3A5C', margin: 0 }}>
-            Operator Print Queue Control
-          </Title>
-          <Text type="secondary">
-            Manage strict First-Come, First-Served jobs and dispatch them to the physical print spooler.
-          </Text>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+          <img
+            src="/fisat-official-logo.png"
+            alt="FISAT Official Logo"
+            style={{
+              width: 48,
+              height: 48,
+              objectFit: 'contain',
+              borderRadius: 10,
+              background: '#FFFFFF',
+              padding: 2,
+              border: '1px solid #CBD5E1',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+              flexShrink: 0,
+            }}
+          />
+          <div>
+            <Title level={2} style={{ color: '#0B2545', margin: 0, fontWeight: 900 }}>
+              Operator Print Queue Control
+            </Title>
+            <Text type="secondary">
+              Central Spooler Counter 1 • Manage strict First-Come, First-Served jobs and dispatch them to the physical printer.
+            </Text>
+          </div>
         </div>
 
         <Button icon={<SyncOutlined />} onClick={handleRefreshAll} loading={queueLoading || statsQuery.isLoading}>

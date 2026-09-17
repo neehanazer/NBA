@@ -21,13 +21,30 @@ export default function CostBreakdown() {
   return (
     <Card style={{ borderRadius: 16, border: '1px solid #E2E8F0' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
-        <div>
-          <Title level={4} style={{ color: '#0B2545', margin: 0 }}>
-            Itemized Campus Print Tariff
-          </Title>
-          <Text type="secondary" style={{ fontSize: 13 }}>
-            Official student subsidized rates approved by FISAT Reprographics Committee.
-          </Text>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <img
+            src="/fisat-official-logo.png"
+            alt="FISAT Official Logo"
+            style={{
+              width: 42,
+              height: 42,
+              objectFit: 'contain',
+              borderRadius: 8,
+              background: '#FFFFFF',
+              padding: 2,
+              border: '1px solid #CBD5E1',
+              boxShadow: '0 2px 6px rgba(0,0,0,0.06)',
+              flexShrink: 0,
+            }}
+          />
+          <div>
+            <Title level={4} style={{ color: '#0B2545', margin: 0 }}>
+              Itemized Campus Print Tariff
+            </Title>
+            <Text type="secondary" style={{ fontSize: 13 }}>
+              Official student subsidized rates approved by FISAT Reprographics.
+            </Text>
+          </div>
         </div>
         <span className="fisat-gold-pill">
           <BankOutlined /> Subsidized

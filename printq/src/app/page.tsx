@@ -37,13 +37,35 @@ export default function HomePage() {
       >
         <Row gutter={[32, 32]} align="middle">
           <Col xs={24} lg={15}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 16 }}>
-              <span className="fisat-gold-pill">
-                <BankOutlined /> FISAT Central Reprographics
-              </span>
-              <Tag color="#134074" style={{ borderRadius: 12, border: 'none', color: '#E2E8F0', padding: '2px 10px' }}>
-                Hormis Nagar Campus
-              </Tag>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14, marginBottom: 20 }}>
+              <img
+                src="/fisat-official-logo.png"
+                alt="FISAT Official Crest"
+                style={{
+                  width: 56,
+                  height: 56,
+                  objectFit: 'contain',
+                  borderRadius: 12,
+                  background: '#FFFFFF',
+                  padding: 3,
+                  boxShadow: '0 8px 24px rgba(0, 0, 0, 0.3)',
+                  border: '2px solid rgba(212, 175, 55, 0.6)',
+                  flexShrink: 0,
+                }}
+              />
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10, flexWrap: 'wrap' }}>
+                  <span className="fisat-gold-pill">
+                    <BankOutlined /> FISAT Central Reprographics
+                  </span>
+                  <Tag color="#134074" style={{ borderRadius: 12, border: 'none', color: '#E2E8F0', padding: '2px 10px', margin: 0 }}>
+                    Hormis Nagar Campus
+                  </Tag>
+                </div>
+                <span style={{ fontSize: 11, color: '#CBD5E1', letterSpacing: '0.4px', fontWeight: 600 }}>
+                  FEDERAL INSTITUTE OF SCIENCE AND TECHNOLOGY • ESTD. 2002
+                </span>
+              </div>
             </div>
 
             <Title

@@ -55,17 +55,34 @@ export default function DashboardPage() {
           gap: 16,
         }}
       >
-        <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
-            <span className="fisat-gold-pill">
-              <BankOutlined /> FISAT Reprographics
-            </span>
-            <Tag color="#0B2545" style={{ borderRadius: 6 }}>Counter 1 Spooler</Tag>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+          <img
+            src="/fisat-official-logo.png"
+            alt="FISAT Official Logo"
+            style={{
+              width: 52,
+              height: 52,
+              objectFit: 'contain',
+              borderRadius: 10,
+              background: '#FFFFFF',
+              padding: 3,
+              border: '1px solid #CBD5E1',
+              boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+              flexShrink: 0,
+            }}
+          />
+          <div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+              <span className="fisat-gold-pill">
+                <BankOutlined /> FISAT Reprographics
+              </span>
+              <Tag color="#0B2545" style={{ borderRadius: 6 }}>Counter 1 Spooler</Tag>
+            </div>
+            <Title level={2} style={{ color: '#0B2545', margin: 0, fontWeight: 900 }}>
+              My Print Submissions &amp; Queue
+            </Title>
+            <Text type="secondary">Track live queue position, collection tokens, and print history.</Text>
           </div>
-          <Title level={2} style={{ color: '#0B2545', margin: 0, fontWeight: 900 }}>
-            My Print Submissions &amp; Queue
-          </Title>
-          <Text type="secondary">Track live queue position, collection tokens, and print history.</Text>
         </div>
 
         <Space>

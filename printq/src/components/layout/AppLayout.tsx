@@ -130,26 +130,23 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 36 }}>
-          {/* Logo with Crest */}
+          {/* Official FISAT Logo & Brand */}
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
-            <div
+            <img
+              src="/fisat-official-logo.png"
+              alt="FISAT Official Logo"
               style={{
-                width: 44,
-                height: 44,
-                borderRadius: 12,
-                background: 'linear-gradient(135deg, #0B2545 0%, #134074 100%)',
-                border: '2px solid #D4AF37',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: '#FFFFFF',
-                boxShadow: '0 4px 12px rgba(11, 37, 69, 0.2)',
+                width: 48,
+                height: 48,
+                objectFit: 'contain',
+                borderRadius: 10,
+                background: '#FFFFFF',
+                padding: 2,
+                boxShadow: '0 4px 12px rgba(11, 37, 69, 0.12)',
+                border: '1px solid #CBD5E1',
                 flexShrink: 0,
               }}
-              className="fisat-header-crest"
-            >
-              <PrinterOutlined style={{ fontSize: 24, color: '#F3C68F' }} />
-            </div>
+            />
 
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 6, lineHeight: 1.1 }}>
@@ -257,21 +254,20 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             }}
           >
             <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
-              <div
+              <img
+                src="/fisat-official-logo.png"
+                alt="FISAT Emblem"
                 style={{
-                  width: 32,
-                  height: 32,
+                  width: 38,
+                  height: 38,
+                  objectFit: 'contain',
                   borderRadius: 8,
-                  background: '#0B2545',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  color: '#D4AF37',
-                  fontSize: 16,
+                  background: '#FFFFFF',
+                  padding: 2,
+                  border: '1px solid #E2E8F0',
+                  boxShadow: '0 2px 6px rgba(0,0,0,0.08)',
                 }}
-              >
-                <PrinterOutlined />
-              </div>
+              />
               <div>
                 <strong style={{ color: '#0B2545', fontSize: 15 }}>
                   FISAT Reprographic &amp; Central Print Center
