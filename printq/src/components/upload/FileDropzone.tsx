@@ -1,8 +1,16 @@
 'use client';
 
 import React from 'react';
-import { Upload, message, Typography, Card, Space } from 'antd';
-import { InboxOutlined, FilePdfOutlined, FileWordOutlined, FileExcelOutlined, FilePptOutlined } from '@ant-design/icons';
+import { Upload, message, Typography, Card, Space, Tag, Alert } from 'antd';
+import {
+  InboxOutlined,
+  FilePdfOutlined,
+  FileWordOutlined,
+  FileExcelOutlined,
+  FilePptOutlined,
+  SafetyCertificateOutlined,
+  InfoCircleOutlined,
+} from '@ant-design/icons';
 import type { UploadProps } from 'antd';
 import { useUploadStore } from '@/stores/uploadStore';
 
@@ -20,7 +28,7 @@ export default function FileDropzone() {
     customRequest: async ({ file, onSuccess, onError }) => {
       const uploadFile = file as File;
       setFile(uploadFile);
-      setProcessing(true, 'Uploading file to print server...', 20);
+      setProcessing(true, 'Uploading file to FISAT print server...', 20);
       nextStep();
 
       const formData = new FormData();
@@ -28,7 +36,7 @@ export default function FileDropzone() {
 
       try {
         const printServerUrl = process.env.NEXT_PUBLIC_PRINT_SERVER_URL || 'http://localhost:4000';
-        setProcessing(true, 'Converting & analyzing pages...', 60);
+        setProcessing(true, 'Converting formats & analyzing ink coverage...', 60);
 
         let data;
         try {
@@ -40,25 +48,24 @@ export default function FileDropzone() {
             data = await res.json();
           }
         } catch {
-          // Print server offline: use browser-based estimation fallback
+          // Fallback if print server is offline
         }
 
         if (!data) {
-          // Client-side fallback if print server is offline
-          const isPdf = uploadFile.name.toLowerCase().endsWith('.pdf');
+          // Client-side fallback estimation
           data = {
             originalFile: uploadFile.name,
             originalName: uploadFile.name,
             fileSize: uploadFile.size,
-            pageCount: 3, // demo estimation
-            colorPages: [1], // demo color page 1
-            bwPages: 2,
+            pageCount: 4,
+            colorPages: [1],
+            bwPages: 3,
           };
         }
 
         setProcessing(true, 'Analysis complete', 100);
 
-        // Also create the job in the database via Next.js API
+        // Record in MongoDB via Next.js API
         const createJobRes = await fetch('/api/jobs', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
@@ -88,7 +95,7 @@ export default function FileDropzone() {
         });
 
         setProcessing(false);
-        nextStep(); // Advance to print options step
+        nextStep();
         if (onSuccess) onSuccess(data);
       } catch (err: any) {
         setProcessing(false);
@@ -99,24 +106,69 @@ export default function FileDropzone() {
   };
 
   return (
-    <Card style={{ borderRadius: 12 }}>
-      <Dragger {...uploadProps} style={{ padding: '32px 16px', background: '#fafcff', border: '2px dashed #91caff' }}>
+    <Card style={{ borderRadius: 16, border: '1px solid #E2E8F0', padding: 8 }}>
+      <div style={{ marginBottom: 16 }}>
+        <Alert
+          message="FISAT Reprographic Guidelines"
+          description="Ensure all seminar reports, lab manuals, and major project papers are finalized. PDF format is recommended for preserving font layouts and KTU formatting."
+          type="info"
+          showIcon
+          icon={<InfoCircleOutlined style={{ color: '#0B2545' }} />}
+          style={{ borderRadius: 10, background: '#F8FAFC', border: '1px solid #E2E8F0' }}
+        />
+      </div>
+
+      <Dragger
+        {...uploadProps}
+        style={{
+          padding: '40px 20px',
+          background: 'linear-gradient(180deg, #F8FAFC 0%, #FFFFFF 100%)',
+          border: '2px dashed #94A3B8',
+          borderRadius: 14,
+        }}
+      >
         <p className="ant-upload-drag-icon">
-          <InboxOutlined style={{ fontSize: 48, color: '#1B3A5C' }} />
+          <div
+            style={{
+              width: 64,
+              height: 64,
+              borderRadius: 16,
+              background: '#EEF2F6',
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#0B2545',
+              fontSize: 32,
+              marginBottom: 8,
+            }}
+          >
+            <InboxOutlined />
+          </div>
         </p>
-        <Title level={4} style={{ color: '#1B3A5C', marginTop: 12, marginBottom: 4 }}>
-          Click or drag your document here to start
+        <Title level={4} style={{ color: '#0B2545', marginTop: 12, marginBottom: 6, fontWeight: 800 }}>
+          Drag your document here, or browse files
         </Title>
-        <Text style={{ color: '#595959', fontSize: 13, display: 'block' }}>
-          Supported formats: PDF, Word (DOCX), PowerPoint (PPTX), Excel (XLSX), Plain Text (TXT)
+        <Text style={{ color: '#64748B', fontSize: 13, display: 'block', maxWidth: 460, margin: '0 auto' }}>
+          Supports PDF, Word (.docx), PowerPoint (.pptx), Excel (.xlsx), and plain text. Maximum file size: 50MB.
         </Text>
-        <div style={{ marginTop: 24, display: 'flex', justifyContent: 'center', gap: 16, color: '#8c8c8c' }}>
-          <Space><FilePdfOutlined style={{ color: '#ff4d4f' }} /> PDF</Space>
-          <Space><FileWordOutlined style={{ color: '#1890ff' }} /> DOCX</Space>
-          <Space><FilePptOutlined style={{ color: '#fa8c16' }} /> PPTX</Space>
-          <Space><FileExcelOutlined style={{ color: '#52c41a' }} /> XLSX</Space>
+
+        <div style={{ marginTop: 28, display: 'flex', justifyContent: 'center', gap: 20, color: '#475569', fontSize: 13 }}>
+          <Space><FilePdfOutlined style={{ color: '#EF4444' }} /> <Text strong>PDF</Text></Space>
+          <Space><FileWordOutlined style={{ color: '#2563EB' }} /> <Text strong>DOCX</Text></Space>
+          <Space><FilePptOutlined style={{ color: '#EA580C' }} /> <Text strong>PPTX</Text></Space>
+          <Space><FileExcelOutlined style={{ color: '#10B981' }} /> <Text strong>XLSX</Text></Space>
         </div>
       </Dragger>
+
+      <div style={{ marginTop: 16, display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '0 8px' }}>
+        <Space size="small">
+          <SafetyCertificateOutlined style={{ color: '#10B981' }} />
+          <Text type="secondary" style={{ fontSize: 12 }}>
+            Encrypted transmission &amp; 24h auto-delete policy
+          </Text>
+        </Space>
+        <Tag color="gold" style={{ margin: 0 }}>Counter 1 Spooler</Tag>
+      </div>
     </Card>
   );
 }

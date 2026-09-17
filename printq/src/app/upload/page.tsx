@@ -1,8 +1,8 @@
 'use client';
 
 import React from 'react';
-import { Typography, Breadcrumb } from 'antd';
-import { CloudUploadOutlined, HomeOutlined } from '@ant-design/icons';
+import { Typography, Breadcrumb, Tag, Space } from 'antd';
+import { CloudUploadOutlined, HomeOutlined, BankOutlined, EnvironmentOutlined } from '@ant-design/icons';
 import Link from 'next/link';
 import UploadWizard from '@/components/upload/UploadWizard';
 
@@ -15,16 +15,24 @@ export default function UploadPage() {
         style={{ marginBottom: 16 }}
         items={[
           { title: <Link href="/"><HomeOutlined /> Home</Link> },
-          { title: 'Upload & Print' },
+          { title: 'Upload &amp; Print Document' },
         ]}
       />
 
-      <div style={{ marginBottom: 24, textAlign: 'center' }}>
-        <Title level={2} style={{ color: '#1B3A5C', margin: 0 }}>
-          Upload Document &amp; Join Print Queue
+      <div style={{ marginBottom: 28, textAlign: 'center' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: 8, marginBottom: 8 }}>
+          <span className="fisat-gold-pill">
+            <BankOutlined /> FISAT Central Reprographics
+          </span>
+          <Tag color="#0B2545" icon={<EnvironmentOutlined />} style={{ borderRadius: 6, margin: 0 }}>
+            Counter 1 Spooler
+          </Tag>
+        </div>
+        <Title level={2} style={{ color: '#0B2545', margin: '0 0 4px', fontWeight: 900 }}>
+          Submit Academic Document for Printing
         </Title>
-        <Text type="secondary">
-          Automated analysis will extract page count, color elements, and compute instant pricing.
+        <Text type="secondary" style={{ fontSize: 14 }}>
+          Automated analysis extracts page count, scans color elements, and computes instant subsidized pricing.
         </Text>
       </div>
 

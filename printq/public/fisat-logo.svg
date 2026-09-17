@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 90" width="100%" height="100%">
+  <defs>
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0B2545" />
+      <stop offset="100%" stop-color="#134074" />
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F3C68F" />
+      <stop offset="50%" stop-color="#D4AF37" />
+      <stop offset="100%" stop-color="#AA820A" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.15" />
+    </filter>
+  </defs>
+
+  <!-- Crest Icon -->
+  <g transform="translate(10, 8)" filter="url(#shadow)">
+    <!-- Shield Outline -->
+    <path d="M36 2 L64 12 C64 45 45 64 36 72 C27 64 8 45 8 12 Z" fill="url(#shieldGrad)" stroke="url(#goldGrad)" stroke-width="2.5" />
+    <!-- Inner Shield Accent -->
+    <path d="M36 8 L58 16 C58 42 43 58 36 64 C29 58 14 42 14 16 Z" fill="none" stroke="rgba(212, 175, 55, 0.4)" stroke-width="1" />
+    
+    <!-- Open Book / Pages symbol -->
+    <path d="M22 38 C28 35 34 37 36 40 C38 37 44 35 50 38 L50 48 C44 45 38 47 36 50 C34 47 28 45 22 48 Z" fill="#FFFFFF" opacity="0.95" />
+    <path d="M36 40 L36 50" stroke="#0B2545" stroke-width="1.5" />
+    
+    <!-- Printer Beam / Tech Ray -->
+    <circle cx="36" cy="24" r="5" fill="url(#goldGrad)" />
+    <path d="M26 24 L46 24" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round" opacity="0.8" />
+  </g>
+
+  <!-- Typography -->
+  <!-- Main Brand FISAT -->
+  <text x="92" y="38" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="28" font-weight="900" letter-spacing="1.5" fill="#0B2545">
+    FISAT
+  </text>
+  <!-- PrintQ Tag with Gold Accent -->
+  <text x="182" y="38" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="28" font-weight="800" letter-spacing="0.5" fill="#134074">
+    Print<tspan fill="#D4AF37">Q</tspan>
+  </text>
+
+  <!-- Subtitle: Federal Institute of Science And Technology -->
+  <text x="93" y="55" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="10.5" font-weight="700" letter-spacing="0.8" fill="#475569">
+    FEDERAL INSTITUTE OF SCIENCE AND TECHNOLOGY
+  </text>
+
+  <!-- Facility Label -->
+  <rect x="93" y="62" width="220" height="18" rx="4" fill="#EEF2F6" />
+  <text x="100" y="75" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif" font-size="9" font-weight="700" letter-spacing="0.5" fill="#0B2545">
+    CENTRAL REPROGRAPHIC &amp; PRINT FACILITY
+  </text>
+</svg>

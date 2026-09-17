@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Layout, Menu, Button, Space, Typography, Tag, Dropdown, Avatar } from 'antd';
+import { Layout, Menu, Button, Space, Typography, Tag, Dropdown, Avatar, Badge } from 'antd';
 import {
   PrinterOutlined,
   CloudUploadOutlined,
@@ -12,6 +12,8 @@ import {
   UserOutlined,
   LogoutOutlined,
   LoginOutlined,
+  EnvironmentOutlined,
+  ThunderboltOutlined,
 } from '@ant-design/icons';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
@@ -29,29 +31,29 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   const menuItems = [
     {
       key: '/upload',
-      icon: <CloudUploadOutlined />,
-      label: <Link href="/upload">Upload & Print</Link>,
+      icon: <CloudUploadOutlined style={{ fontSize: 16 }} />,
+      label: <Link href="/upload">Upload &amp; Print</Link>,
     },
     {
       key: '/dashboard',
-      icon: <UnorderedListOutlined />,
-      label: <Link href="/dashboard">My Jobs</Link>,
+      icon: <UnorderedListOutlined style={{ fontSize: 16 }} />,
+      label: <Link href="/dashboard">My Print Jobs</Link>,
     },
     ...(isOperator
       ? [
           {
             key: '/operator',
-            icon: <DashboardOutlined />,
+            icon: <DashboardOutlined style={{ fontSize: 16 }} />,
             label: <Link href="/operator">Operator Queue</Link>,
           },
           {
             key: '/operator/pricing',
-            icon: <SettingOutlined />,
-            label: <Link href="/operator/pricing">Pricing</Link>,
+            icon: <SettingOutlined style={{ fontSize: 16 }} />,
+            label: <Link href="/operator/pricing">Tariff Config</Link>,
           },
           {
             key: '/operator/stats',
-            icon: <LineChartOutlined />,
+            icon: <LineChartOutlined style={{ fontSize: 16 }} />,
             label: <Link href="/operator/stats">Analytics</Link>,
           },
         ]
@@ -62,12 +64,16 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     {
       key: 'profile',
       label: (
-        <div style={{ padding: '4px 8px' }}>
-          <div style={{ fontWeight: 600 }}>{session?.user?.name || 'User'}</div>
-          <div style={{ fontSize: 12, color: '#8c8c8c' }}>{session?.user?.email}</div>
-          <Tag color={isOperator ? 'gold' : 'blue'} style={{ marginTop: 4 }}>
-            {role}
-          </Tag>
+        <div style={{ padding: '6px 10px' }}>
+          <div style={{ fontWeight: 700, color: '#0B2545', fontSize: 14 }}>
+            {session?.user?.name || 'FISAT User'}
+          </div>
+          <div style={{ fontSize: 12, color: '#64748B' }}>{session?.user?.email}</div>
+          <div style={{ marginTop: 6, display: 'flex', gap: 6 }}>
+            <Tag color={isOperator ? 'gold' : 'blue'}>
+              {role === 'OPERATOR' ? 'REPROGRAPHIC OPERATOR' : 'FISAT STUDENT'}
+            </Tag>
+          </div>
         </div>
       ),
     },
@@ -75,130 +81,237 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
     {
       key: 'logout',
       icon: <LogoutOutlined />,
-      label: 'Sign Out',
+      label: 'Sign Out of Campus ID',
       danger: true,
       onClick: () => signOut({ callbackUrl: '/login' }),
     },
   ];
 
   return (
-    <Layout style={{ minHeight: '100vh', background: '#f8fafc' }}>
+    <Layout style={{ minHeight: '100vh', background: '#F8FAFC' }}>
+      {/* Official Collegiate Top Bar */}
+      <div className="fisat-ticker-bar">
+        <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <span style={{ fontWeight: 800, color: '#D4AF37', letterSpacing: '0.5px' }}>
+            FEDERAL INSTITUTE OF SCIENCE AND TECHNOLOGY (FISAT)
+          </span>
+          <span style={{ color: '#64748B', display: 'none' }} className="d-sm-inline">|</span>
+          <span style={{ color: '#94A3B8', fontSize: 11 }}>
+            Central Reprographic &amp; Document Service
+          </span>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+          <div className="fisat-tag-live">
+            <div className="fisat-pulse-dot" />
+            <span style={{ fontSize: 11, fontWeight: 600, color: '#E2E8F0' }}>
+              Spooler Online • Counter 1 (Ground Floor)
+            </span>
+          </div>
+          <Tag color="#134074" style={{ margin: 0, fontSize: 10, border: 'none' }}>
+            AUTONOMOUS
+          </Tag>
+        </div>
+      </div>
+
+      {/* Main Header */}
       <Header
         style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          background: '#ffffff',
-          borderBottom: '1px solid #e2e8f0',
-          padding: '0 24px',
+          background: '#FFFFFF',
+          borderBottom: '1px solid #E2E8F0',
+          padding: '0 28px',
           position: 'sticky',
           top: 0,
           zIndex: 1000,
-          height: 64,
+          height: 72,
+          boxShadow: '0 4px 20px -2px rgba(11, 37, 69, 0.05)',
         }}
       >
-        <div style={{ display: 'flex', alignItems: 'center', gap: 32 }}>
-          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 8, textDecoration: 'none' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 36 }}>
+          {/* Logo with Crest */}
+          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: 12, textDecoration: 'none' }}>
             <div
               style={{
-                width: 38,
-                height: 38,
-                borderRadius: 10,
-                background: 'linear-gradient(135deg, #1B3A5C 0%, #2A5C8F 100%)',
+                width: 44,
+                height: 44,
+                borderRadius: 12,
+                background: 'linear-gradient(135deg, #0B2545 0%, #134074 100%)',
+                border: '2px solid #D4AF37',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
-                color: '#fff',
-                fontSize: 20,
-                boxShadow: '0 2px 8px rgba(27, 58, 92, 0.25)',
+                color: '#FFFFFF',
+                boxShadow: '0 4px 12px rgba(11, 37, 69, 0.2)',
+                flexShrink: 0,
               }}
+              className="fisat-header-crest"
             >
-              <PrinterOutlined />
+              <PrinterOutlined style={{ fontSize: 24, color: '#F3C68F' }} />
             </div>
-            <div>
-              <span style={{ fontSize: 18, fontWeight: 700, color: '#1B3A5C', letterSpacing: -0.5 }}>
-                Print<span style={{ color: '#fa8c16' }}>Q</span>
-              </span>
-              <span
-                style={{
-                  fontSize: 10,
-                  marginLeft: 6,
-                  padding: '1px 6px',
-                  borderRadius: 4,
-                  background: '#f0f5ff',
-                  color: '#1d39c4',
-                  fontWeight: 600,
-                }}
-              >
-                FCFS
+
+            <div style={{ display: 'flex', flexDirection: 'column' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 6, lineHeight: 1.1 }}>
+                <span style={{ fontSize: 20, fontWeight: 900, color: '#0B2545', letterSpacing: -0.5 }}>
+                  FISAT
+                </span>
+                <span style={{ fontSize: 20, fontWeight: 800, color: '#134074' }}>
+                  Print<span style={{ color: '#D4AF37' }}>Q</span>
+                </span>
+                <span className="fisat-gold-pill" style={{ marginLeft: 4 }}>
+                  FCFS Hub
+                </span>
+              </div>
+              <span style={{ fontSize: 10, color: '#64748B', fontWeight: 600, letterSpacing: 0.3, marginTop: 2 }}>
+                CENTRAL PRINTING &amp; BINDING FACILITY
               </span>
             </div>
           </Link>
 
+          {/* Navigation Links */}
           <Menu
             mode="horizontal"
             selectedKeys={[pathname]}
             items={menuItems}
-            style={{ borderBottom: 'none', background: 'transparent', minWidth: 320 }}
+            style={{
+              borderBottom: 'none',
+              background: 'transparent',
+              minWidth: 320,
+              fontSize: 14,
+              fontWeight: 600,
+            }}
           />
         </div>
 
+        {/* User / Session Area */}
         <Space size="middle">
           {status === 'authenticated' ? (
             <Dropdown menu={{ items: userMenuItems }} trigger={['click']} placement="bottomRight">
-              <Space style={{ cursor: 'pointer' }}>
+              <Space style={{ cursor: 'pointer', padding: '4px 12px', borderRadius: 8, background: '#F8FAFC', border: '1px solid #E2E8F0' }}>
                 <Avatar
-                  style={{ backgroundColor: '#1B3A5C' }}
+                  style={{ backgroundColor: '#0B2545', fontWeight: 700 }}
                   icon={<UserOutlined />}
                 >
                   {session.user?.name?.[0]?.toUpperCase()}
                 </Avatar>
                 <div style={{ display: 'flex', flexDirection: 'column', lineHeight: 1.2 }}>
-                  <Text strong style={{ fontSize: 13 }}>
+                  <Text strong style={{ fontSize: 13, color: '#0B2545' }}>
                     {session.user?.name}
                   </Text>
                   <Text type="secondary" style={{ fontSize: 11 }}>
-                    {role}
+                    {role === 'OPERATOR' ? 'Shop Operator' : 'Student / Faculty'}
                   </Text>
                 </div>
               </Space>
             </Dropdown>
           ) : (
-            <Space>
+            <Space size="small">
               <Link href="/login">
-                <Button type="default" icon={<LoginOutlined />}>
-                  Log In
+                <Button type="default" icon={<LoginOutlined />} style={{ borderRadius: 8 }}>
+                  Sign In
                 </Button>
               </Link>
               <Link href="/register">
-                <Button type="primary">Register</Button>
+                <Button
+                  type="primary"
+                  style={{
+                    background: '#0B2545',
+                    borderColor: '#0B2545',
+                    borderRadius: 8,
+                    fontWeight: 700,
+                  }}
+                >
+                  Register Campus ID
+                </Button>
               </Link>
             </Space>
           )}
         </Space>
       </Header>
 
-      <Content style={{ padding: '24px', maxWidth: 1280, margin: '0 auto', width: '100%' }}>
+      {/* Main Page Content */}
+      <Content style={{ padding: '28px 24px', maxWidth: 1280, margin: '0 auto', width: '100%' }}>
         {children}
       </Content>
 
+      {/* Collegiate Footer */}
       <Footer
         style={{
-          textAlign: 'center',
-          color: '#8c8c8c',
-          background: '#ffffff',
-          borderTop: '1px solid #e2e8f0',
-          padding: '16px 24px',
+          background: '#FFFFFF',
+          borderTop: '1px solid #E2E8F0',
+          padding: '32px 24px 20px',
+          color: '#475569',
         }}
       >
-        <Space direction="vertical" size={2}>
-          <div>
-            <strong>PrintQ</strong> — Automated College Print Shop &amp; FCFS Queue System
+        <div style={{ maxWidth: 1240, margin: '0 auto' }}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              flexWrap: 'wrap',
+              gap: 20,
+              paddingBottom: 24,
+              borderBottom: '1px solid #F1F5F9',
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <div
+                style={{
+                  width: 32,
+                  height: 32,
+                  borderRadius: 8,
+                  background: '#0B2545',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  color: '#D4AF37',
+                  fontSize: 16,
+                }}
+              >
+                <PrinterOutlined />
+              </div>
+              <div>
+                <strong style={{ color: '#0B2545', fontSize: 15 }}>
+                  FISAT Reprographic &amp; Central Print Center
+                </strong>
+                <div style={{ fontSize: 12, color: '#64748B' }}>
+                  Federal Institute of Science And Technology (Autonomous), Hormis Nagar, Mookkannoor, Angamaly, Kerala
+                </div>
+              </div>
+            </div>
+
+            <Space size="large" style={{ fontSize: 13 }}>
+              <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                <EnvironmentOutlined style={{ color: '#134074' }} /> Ground Floor, Main Block
+              </span>
+              <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+                <ThunderboltOutlined style={{ color: '#D4AF37' }} /> Operating: Mon – Sat (8:30 AM – 5:30 PM)
+              </span>
+            </Space>
           </div>
-          <div style={{ fontSize: 12 }}>
-            Transparent per-page pricing • Live queue tracking • Automated duplex &amp; color detection
+
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              alignItems: 'center',
+              paddingTop: 16,
+              fontSize: 12,
+              color: '#94A3B8',
+              flexWrap: 'wrap',
+              gap: 12,
+            }}
+          >
+            <div>
+              &copy; {new Date().getFullYear()} FISAT PrintQ System. Designed for student lab manuals, assignments, seminars &amp; project reports.
+            </div>
+            <div>
+              Automated First-Come, First-Served Queue • Ghostscript Color Analyzer • CUPS High-Speed Dispatch
+            </div>
           </div>
-        </Space>
+        </div>
       </Footer>
     </Layout>
   );

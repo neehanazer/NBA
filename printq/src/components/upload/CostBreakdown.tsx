@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { Card, Descriptions, Typography, Tag, Statistic, Divider, Space } from 'antd';
-import { DollarCircleOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import { DollarCircleOutlined, InfoCircleOutlined, CheckCircleFilled, BankOutlined } from '@ant-design/icons';
 import { useUploadStore } from '@/stores/uploadStore';
 import { usePricing } from '@/hooks/usePricing';
 
@@ -19,65 +19,104 @@ export default function CostBreakdown() {
   const rateColor = pricing?.ratePerPageColor ?? 5.0;
 
   return (
-    <Card style={{ borderRadius: 12 }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
-        <Title level={4} style={{ margin: 0 }}>
-          Itemized Cost Breakdown
-        </Title>
-        <Tag color="blue" icon={<InfoCircleOutlined />}>
-          Verified Per-Page Rates
-        </Tag>
+    <Card style={{ borderRadius: 16, border: '1px solid #E2E8F0' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+        <div>
+          <Title level={4} style={{ color: '#0B2545', margin: 0 }}>
+            Itemized Campus Print Tariff
+          </Title>
+          <Text type="secondary" style={{ fontSize: 13 }}>
+            Official student subsidized rates approved by FISAT Reprographics Committee.
+          </Text>
+        </div>
+        <span className="fisat-gold-pill">
+          <BankOutlined /> Subsidized
+        </span>
       </div>
 
-      <Descriptions bordered column={1} size="middle" style={{ background: '#fafafa' }}>
-        <Descriptions.Item label={`Black & White Pages (${costBreakdown.bwPages} pages @ ${currencySymbol}${rateBW.toFixed(2)})`}>
-          <Text strong>{currencySymbol}{costBreakdown.bwCost.toFixed(2)}</Text>
+      <Descriptions
+        bordered
+        column={1}
+        size="middle"
+        style={{ background: '#FFFFFF', borderRadius: 10, overflow: 'hidden' }}
+      >
+        <Descriptions.Item
+          label={
+            <span>
+              <Text strong>Black &amp; White Pages</Text>
+              <div style={{ fontSize: 11, color: '#64748B' }}>
+                {costBreakdown.bwPages} pages @ {currencySymbol}{rateBW.toFixed(2)} per page
+              </div>
+            </span>
+          }
+        >
+          <Text strong style={{ fontSize: 15, color: '#0B2545' }}>
+            {currencySymbol}{costBreakdown.bwCost.toFixed(2)}
+          </Text>
         </Descriptions.Item>
 
-        <Descriptions.Item label={`Color Pages (${costBreakdown.colorPages} pages @ ${currencySymbol}${rateColor.toFixed(2)})`}>
-          <Text strong style={{ color: costBreakdown.colorPages > 0 ? '#d4380d' : undefined }}>
+        <Descriptions.Item
+          label={
+            <span>
+              <Text strong>Color Diagram &amp; Image Pages</Text>
+              <div style={{ fontSize: 11, color: '#64748B' }}>
+                {costBreakdown.colorPages} pages @ {currencySymbol}{rateColor.toFixed(2)} per page
+              </div>
+            </span>
+          }
+        >
+          <Text strong style={{ fontSize: 15, color: costBreakdown.colorPages > 0 ? '#EA580C' : '#0B2545' }}>
             {currencySymbol}{costBreakdown.colorCost.toFixed(2)}
           </Text>
         </Descriptions.Item>
 
-        <Descriptions.Item label="Subtotal (Per Copy)">
-          <Text>{currencySymbol}{costBreakdown.subtotal.toFixed(2)}</Text>
+        <Descriptions.Item label={<Text strong>Subtotal (Per Copy)</Text>}>
+          <Text style={{ fontSize: 14 }}>{currencySymbol}{costBreakdown.subtotal.toFixed(2)}</Text>
         </Descriptions.Item>
 
         {duplex && costBreakdown.duplexDiscount > 0 && (
-          <Descriptions.Item label="Duplex Savings (10% Eco Discount)">
-            <Text type="success" strong>
+          <Descriptions.Item
+            label={
+              <Space>
+                <CheckCircleFilled style={{ color: '#10B981' }} />
+                <Text strong style={{ color: '#065F46' }}>Duplex Discount (10% Eco Savings)</Text>
+              </Space>
+            }
+          >
+            <Text type="success" strong style={{ fontSize: 15 }}>
               - {currencySymbol}{costBreakdown.duplexDiscount.toFixed(2)}
             </Text>
           </Descriptions.Item>
         )}
 
         {copies > 1 && (
-          <Descriptions.Item label="Number of Copies">
-            <Text strong>× {copies} sets</Text>
+          <Descriptions.Item label={<Text strong>Sets / Copies Multiplier</Text>}>
+            <Tag color="purple" style={{ fontSize: 13, fontWeight: 700, padding: '2px 10px' }}>
+              × {copies} sets
+            </Tag>
           </Descriptions.Item>
         )}
       </Descriptions>
 
-      <Divider style={{ margin: '16px 0' }} />
+      <Divider style={{ margin: '20px 0 16px' }} />
 
       <div
         style={{
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          padding: '12px 16px',
-          background: '#f6ffed',
-          borderRadius: 8,
-          border: '1px solid #b7eb8f',
+          padding: '16px 20px',
+          background: 'linear-gradient(135deg, #F0FDF4 0%, #DCFCE7 100%)',
+          borderRadius: 12,
+          border: '1px solid #86EFAC',
         }}
       >
-        <Space direction="vertical" size={0}>
-          <Text strong style={{ fontSize: 16, color: '#135200' }}>
-            Total Printing Amount
+        <Space direction="vertical" size={2}>
+          <Text strong style={{ fontSize: 16, color: '#14532D' }}>
+            Final Payable Amount
           </Text>
-          <Text type="secondary" style={{ fontSize: 12 }}>
-            Includes all pages, copies, and applicable discounts
+          <Text type="secondary" style={{ fontSize: 12, color: '#166534' }}>
+            Net total with paper costs, color printing &amp; student discounts included
           </Text>
         </Space>
 
@@ -85,7 +124,7 @@ export default function CostBreakdown() {
           value={costBreakdown.total}
           prefix={currencySymbol}
           precision={2}
-          valueStyle={{ color: '#389e0d', fontWeight: 700, fontSize: 26 }}
+          valueStyle={{ color: '#15803D', fontWeight: 800, fontSize: 30 }}
         />
       </div>
     </Card>

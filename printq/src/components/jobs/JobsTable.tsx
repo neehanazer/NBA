@@ -1,13 +1,12 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Table, Button, Space, Tag, Typography, Popconfirm, message } from 'antd';
+import { Table, Button, Space, Tag, Typography, Popconfirm } from 'antd';
 import {
   FilePdfOutlined,
   CheckCircleOutlined,
-  CloseCircleOutlined,
   CreditCardOutlined,
-  EyeOutlined,
+  EnvironmentOutlined,
 } from '@ant-design/icons';
 import type { ColumnsType } from 'antd/es/table';
 import { Job } from '@/types';
@@ -27,7 +26,7 @@ interface JobsTableProps {
 export default function JobsTable({ jobs, loading, onRefresh, onCancelJob }: JobsTableProps) {
   const [selectedJob, setSelectedJob] = useState<Job | null>(null);
   const [paymentModalOpen, setPaymentModalOpen] = useState(false);
-  const { setProcessedFileInfo, setStep } = useUploadStore();
+  const { setProcessedFileInfo } = useUploadStore();
 
   const handleOpenPay = (job: Job) => {
     setSelectedJob(job);
@@ -45,72 +44,93 @@ export default function JobsTable({ jobs, loading, onRefresh, onCancelJob }: Job
 
   const columns: ColumnsType<Job> = [
     {
-      title: 'Document',
+      title: 'Document & Details',
       dataIndex: 'originalName',
       key: 'originalName',
       render: (text: string, record: Job) => (
         <Space>
-          <FilePdfOutlined style={{ color: '#ff4d4f', fontSize: 18 }} />
+          <div
+            style={{
+              width: 36,
+              height: 36,
+              borderRadius: 8,
+              background: '#EEF2F6',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#0B2545',
+              fontSize: 18,
+            }}
+          >
+            <FilePdfOutlined style={{ color: '#EF4444' }} />
+          </div>
           <div>
-            <Text strong style={{ fontSize: 14 }}>{text}</Text>
-            <div style={{ fontSize: 11, color: '#8c8c8c' }}>
-              {record.fileSize ? `${(record.fileSize / 1024).toFixed(0)} KB` : 'Document'}
+            <Text strong style={{ fontSize: 14, color: '#0B2545' }}>{text}</Text>
+            <div style={{ fontSize: 11, color: '#64748B' }}>
+              {record.fileSize ? `${(record.fileSize / 1024).toFixed(0)} KB` : 'Document'} • Token #{record.id.slice(-5).toUpperCase()}
             </div>
           </div>
         </Space>
       ),
     },
     {
-      title: 'Pages & Color',
+      title: 'Page Analysis',
       key: 'pages',
       render: (_: any, record: Job) => (
         <Space direction="vertical" size={2}>
-          <Text>{record.pageCount || 1} pages total</Text>
-          <div>
+          <Text strong>{record.pageCount || 1} Total Pages</Text>
+          <div style={{ display: 'flex', gap: 4, flexWrap: 'wrap' }}>
             {record.colorPages && record.colorPages.length > 0 ? (
-              <Tag color="volcano">{record.colorPages.length} Color</Tag>
+              <Tag color="volcano" style={{ fontSize: 11 }}>{record.colorPages.length} Color</Tag>
             ) : (
-              <Tag color="default">All B&amp;W</Tag>
+              <Tag color="default" style={{ fontSize: 11 }}>All B&amp;W</Tag>
             )}
-            {record.duplex && <Tag color="blue">Duplex</Tag>}
-            {record.copies > 1 && <Tag color="purple">{record.copies} copies</Tag>}
+            {record.duplex && <Tag color="blue" style={{ fontSize: 11 }}>Duplex</Tag>}
+            {record.copies > 1 && <Tag color="purple" style={{ fontSize: 11 }}>{record.copies} sets</Tag>}
           </div>
         </Space>
       ),
     },
     {
-      title: 'Cost',
+      title: 'Tariff & Payment',
       dataIndex: 'cost',
       key: 'cost',
       render: (cost: number, record: Job) => (
         <Space direction="vertical" size={2}>
-          <Text strong style={{ color: '#1B3A5C' }}>
+          <Text strong style={{ color: '#0B2545', fontSize: 15 }}>
             ₹{(cost || 0).toFixed(2)}
           </Text>
           {record.paid ? (
-            <Tag color="success" icon={<CheckCircleOutlined />}>
-              Paid ({record.paymentMethod || 'Online'})
+            <Tag color="success" icon={<CheckCircleOutlined />} style={{ fontSize: 11 }}>
+              Paid ({record.paymentMethod === 'counter' ? 'Counter' : 'Online'})
             </Tag>
           ) : (
-            <Tag color="warning">Unpaid</Tag>
+            <Tag color="warning" style={{ fontSize: 11 }}>Payment Due</Tag>
           )}
         </Space>
       ),
     },
     {
-      title: 'Queue / Status',
+      title: 'Queue Status',
       key: 'status',
       render: (_: any, record: Job) => (
         <Space direction="vertical" size={4}>
           <StatusBadge status={record.status} />
           {record.status === 'QUEUED' && record.queuePosition && (
-            <Tag color="geekblue">FCFS #{record.queuePosition}</Tag>
+            <span className="fisat-gold-pill">
+              FCFS #{record.queuePosition}
+            </span>
+          )}
+          {record.status === 'COMPLETED' && (
+            <Text type="secondary" style={{ fontSize: 11 }}>
+              <EnvironmentOutlined /> Counter 1
+            </Text>
           )}
         </Space>
       ),
     },
     {
-      title: 'Date',
+      title: 'Submission Time',
       dataIndex: 'createdAt',
       key: 'createdAt',
       render: (date: string) => (
@@ -138,17 +158,17 @@ export default function JobsTable({ jobs, loading, onRefresh, onCancelJob }: Job
                 type="primary"
                 size="small"
                 icon={<CreditCardOutlined />}
-                style={{ background: '#1B3A5C' }}
+                style={{ background: '#0B2545', borderColor: '#0B2545', fontWeight: 600 }}
                 onClick={() => handleOpenPay(record)}
               >
-                Pay Now
+                Pay &amp; Queue
               </Button>
             )}
 
             {canCancel && onCancelJob && (
               <Popconfirm
                 title="Cancel Print Job?"
-                description="Are you sure you want to cancel this job?"
+                description="Are you sure you want to cancel this submission?"
                 onConfirm={() => onCancelJob(record.id)}
                 okText="Yes"
                 cancelText="No"
@@ -172,7 +192,7 @@ export default function JobsTable({ jobs, loading, onRefresh, onCancelJob }: Job
         rowKey="id"
         loading={loading}
         pagination={{ pageSize: 8 }}
-        style={{ background: '#fff', borderRadius: 12, overflow: 'hidden' }}
+        style={{ borderRadius: 12, overflow: 'hidden' }}
       />
 
       <PaymentModal

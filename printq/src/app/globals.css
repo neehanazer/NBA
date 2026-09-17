@@ -1,34 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@500;700&display=swap');
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-html {
-  height: 100%;
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  --fisat-navy: #0B2545;
+  --fisat-navy-deep: #06152B;
+  --fisat-blue: #134074;
+  --fisat-blue-accent: #1D5CA8;
+  --fisat-gold: #D4AF37;
+  --fisat-gold-light: #F7E7C4;
+  --fisat-amber: #D97706;
+  --fisat-bg: #F4F7FB;
+  --fisat-surface: #FFFFFF;
+  --fisat-border: #E2E8F0;
+  --fisat-text-primary: #0F172A;
+  --fisat-text-secondary: #475569;
+  --fisat-text-muted: #94A3B8;
+  
+  --shadow-sm: 0 1px 2px 0 rgba(11, 37, 69, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(11, 37, 69, 0.08), 0 2px 4px -2px rgba(11, 37, 69, 0.04);
+  --shadow-lg: 0 10px 25px -3px rgba(11, 37, 69, 0.1), 0 4px 6px -4px rgba(11, 37, 69, 0.05);
+  --shadow-glow: 0 0 20px rgba(212, 175, 55, 0.25);
 }
 
 * {
@@ -37,13 +27,132 @@ body {
   margin: 0;
 }
 
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  background-color: var(--fisat-bg);
+  color: var(--fisat-text-primary);
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 a {
   color: inherit;
   text-decoration: none;
 }
 
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
+/* FISAT Custom Aesthetic Components */
+.fisat-header-crest {
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+.fisat-header-crest:hover {
+  transform: scale(1.04);
+}
+
+.fisat-hero-card {
+  background: linear-gradient(135deg, #0B2545 0%, #06152B 50%, #134074 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.fisat-hero-card::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, rgba(212, 175, 55, 0) 70%);
+  pointer-events: none;
+}
+
+.fisat-glass {
+  background: rgba(255, 255, 255, 0.88);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+}
+
+.fisat-card-hover {
+  transition: all 0.25s ease;
+}
+.fisat-card-hover:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-lg);
+  border-color: #CBD5E1;
+}
+
+.fisat-gold-pill {
+  background: linear-gradient(135deg, #FFF9EB 0%, #FEF3C7 100%);
+  border: 1px solid #FCD34D;
+  color: #92400E;
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.fisat-ticker-bar {
+  background: #06152B;
+  color: #E2E8F0;
+  font-size: 12px;
+  padding: 6px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.3);
+}
+
+.fisat-tag-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.fisat-pulse-dot {
+  width: 8px;
+  height: 8px;
+  background-color: #10B981;
+  border-radius: 50%;
+  box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+  animation: fisatPulse 2s infinite;
+}
+
+@keyframes fisatPulse {
+  0% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
   }
+  70% {
+    transform: scale(1);
+    box-shadow: 0 0 0 6px rgba(16, 185, 129, 0);
+  }
+  100% {
+    transform: scale(0.95);
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+/* Ant Design Component Overrides for FISAT Aesthetics */
+.ant-btn-primary {
+  box-shadow: 0 2px 8px rgba(11, 37, 69, 0.2) !important;
+  font-weight: 600 !important;
+}
+
+.ant-card {
+  border-color: #E2E8F0 !important;
+}
+
+.ant-table-wrapper .ant-table-thead > tr > th {
+  font-weight: 700 !important;
+  font-size: 13px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
 }

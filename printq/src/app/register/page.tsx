@@ -1,8 +1,17 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Card, Form, Input, Button, Typography, Select, message } from 'antd';
-import { UserOutlined, MailOutlined, LockOutlined, PhoneOutlined, UserAddOutlined, PrinterOutlined } from '@ant-design/icons';
+import { Card, Form, Input, Button, Typography, Select, message, Row, Col } from 'antd';
+import {
+  UserOutlined,
+  MailOutlined,
+  LockOutlined,
+  PhoneOutlined,
+  UserAddOutlined,
+  PrinterOutlined,
+  BankOutlined,
+  IdcardOutlined,
+} from '@ant-design/icons';
 import { signIn } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -20,7 +29,13 @@ export default function RegisterPage() {
       const res = await fetch('/api/auth/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(values),
+        body: JSON.stringify({
+          name: values.name,
+          email: values.email,
+          password: values.password,
+          phone: values.phone,
+          role: values.role,
+        }),
       });
 
       const data = await res.json();
@@ -28,9 +43,8 @@ export default function RegisterPage() {
         throw new Error(data.error || 'Registration failed');
       }
 
-      message.success('Account created! Logging you in...');
+      message.success('Campus Account Registered! Logging in...');
 
-      // Auto login
       await signIn('credentials', {
         email: values.email,
         password: values.password,
@@ -47,80 +61,106 @@ export default function RegisterPage() {
   };
 
   return (
-    <div style={{ maxWidth: 480, margin: '40px auto' }}>
+    <div style={{ maxWidth: 520, margin: '32px auto' }}>
       <Card
         style={{
-          borderRadius: 16,
-          boxShadow: '0 4px 20px rgba(0,0,0,0.06)',
-          border: '1px solid #e2e8f0',
+          borderRadius: 20,
+          boxShadow: '0 10px 30px -5px rgba(11, 37, 69, 0.1)',
+          border: '1px solid #E2E8F0',
         }}
       >
         <div style={{ textAlign: 'center', marginBottom: 24 }}>
           <div
             style={{
-              width: 52,
-              height: 52,
-              borderRadius: 14,
-              background: 'linear-gradient(135deg, #1B3A5C 0%, #2A5C8F 100%)',
+              width: 54,
+              height: 54,
+              borderRadius: 16,
+              background: 'linear-gradient(135deg, #0B2545 0%, #134074 100%)',
+              border: '2px solid #D4AF37',
               display: 'inline-flex',
               alignItems: 'center',
               justifyContent: 'center',
-              color: '#fff',
+              color: '#F3C68F',
               fontSize: 26,
               marginBottom: 12,
+              boxShadow: '0 8px 16px rgba(11, 37, 69, 0.2)',
             }}
           >
             <PrinterOutlined />
           </div>
-          <Title level={3} style={{ color: '#1B3A5C', margin: 0 }}>
-            Create PrintQ Account
+          <div>
+            <span className="fisat-gold-pill" style={{ marginBottom: 6 }}>
+              <BankOutlined /> FISAT Central Reprographics
+            </span>
+          </div>
+          <Title level={3} style={{ color: '#0B2545', margin: '4px 0 2px', fontWeight: 900 }}>
+            Register Campus Print Account
           </Title>
-          <Text type="secondary">Join the automated queue system</Text>
+          <Text type="secondary" style={{ fontSize: 13 }}>
+            Eligible for FISAT students, faculty, and reprographic operators
+          </Text>
         </div>
 
-        <Form layout="vertical" onFinish={onFinish} requiredMark={false} initialValues={{ role: 'STUDENT' }}>
+        <Form layout="vertical" onFinish={onFinish} requiredMark={false} initialValues={{ role: 'STUDENT', department: 'CSE' }}>
           <Form.Item
             name="name"
-            label="Full Name"
-            rules={[{ required: true, message: 'Please enter your name' }]}
+            label={<span style={{ fontWeight: 700, color: '#0B2545' }}>Full Name</span>}
+            rules={[{ required: true, message: 'Please enter your full name' }]}
           >
-            <Input prefix={<UserOutlined />} placeholder="Alex Kumar" size="large" />
+            <Input prefix={<UserOutlined style={{ color: '#94A3B8' }} />} placeholder="e.g. Rahul Nair" size="large" style={{ borderRadius: 8 }} />
           </Form.Item>
 
-          <Form.Item
-            name="email"
-            label="College Email Address"
-            rules={[
-              { required: true, message: 'Please enter your email' },
-              { type: 'email', message: 'Enter a valid email' },
-            ]}
-          >
-            <Input prefix={<MailOutlined />} placeholder="alex@college.edu" size="large" />
-          </Form.Item>
+          <Row gutter={16}>
+            <Col span={14}>
+              <Form.Item
+                name="email"
+                label={<span style={{ fontWeight: 700, color: '#0B2545' }}>Campus Email</span>}
+                rules={[
+                  { required: true, message: 'Please enter your email' },
+                  { type: 'email', message: 'Enter a valid email' },
+                ]}
+              >
+                <Input prefix={<MailOutlined style={{ color: '#94A3B8' }} />} placeholder="name@fisat.ac.in" size="large" style={{ borderRadius: 8 }} />
+              </Form.Item>
+            </Col>
+            <Col span={10}>
+              <Form.Item name="department" label={<span style={{ fontWeight: 700, color: '#0B2545' }}>Branch / Dept</span>}>
+                <Select size="large" style={{ borderRadius: 8 }}>
+                  <Option value="CSE">CSE</Option>
+                  <Option value="ECE">ECE</Option>
+                  <Option value="EEE">EEE</Option>
+                  <Option value="MECH">Mechanical</Option>
+                  <Option value="CIVIL">Civil</Option>
+                  <Option value="MCA">MCA</Option>
+                  <Option value="MBA">MBA</Option>
+                </Select>
+              </Form.Item>
+            </Col>
+          </Row>
 
           <Form.Item
             name="phone"
-            label="Phone Number (for WhatsApp Pickup Alerts)"
-            help="Optional. Receive live WhatsApp message when your prints are ready."
+            label={<span style={{ fontWeight: 700, color: '#0B2545' }}>Phone Number (WhatsApp Ready Alerts)</span>}
+            help="Optional. We will send you an instant WhatsApp notification when prints are ready at Counter 1."
           >
-            <Input prefix={<PhoneOutlined />} placeholder="+91 9876543210" size="large" />
+            <Input prefix={<PhoneOutlined style={{ color: '#94A3B8' }} />} placeholder="+91 9876543210" size="large" style={{ borderRadius: 8 }} />
           </Form.Item>
 
           <Form.Item
             name="password"
-            label="Password"
+            label={<span style={{ fontWeight: 700, color: '#0B2545' }}>Choose Password</span>}
             rules={[
               { required: true, message: 'Please choose a password' },
               { min: 6, message: 'Password must be at least 6 characters' },
             ]}
           >
-            <Input.Password prefix={<LockOutlined />} placeholder="••••••••" size="large" />
+            <Input.Password prefix={<LockOutlined style={{ color: '#94A3B8' }} />} placeholder="••••••••" size="large" style={{ borderRadius: 8 }} />
           </Form.Item>
 
-          <Form.Item name="role" label="Account Role">
-            <Select size="large">
-              <Option value="STUDENT">Student (Standard User)</Option>
-              <Option value="OPERATOR">Print Shop Operator</Option>
+          <Form.Item name="role" label={<span style={{ fontWeight: 700, color: '#0B2545' }}>Account Type</span>}>
+            <Select size="large" style={{ borderRadius: 8 }}>
+              <Option value="STUDENT">FISAT Student / Scholar (Submit &amp; Track)</Option>
+              <Option value="OPERATOR">Reprographics Operator (Counter 1 Spooler Access)</Option>
             </Select>
           </Form.Item>
 
@@ -131,16 +171,24 @@ export default function RegisterPage() {
             loading={loading}
             block
             size="large"
-            style={{ background: '#1B3A5C', marginTop: 8 }}
+            style={{
+              background: '#0B2545',
+              borderColor: '#0B2545',
+              borderRadius: 8,
+              fontWeight: 800,
+              height: 44,
+              marginTop: 6,
+              boxShadow: '0 4px 14px rgba(11, 37, 69, 0.25)',
+            }}
           >
-            Create Account &amp; Continue
+            Complete Registration &amp; Print
           </Button>
         </Form>
 
-        <div style={{ textAlign: 'center', marginTop: 24 }}>
-          <Text type="secondary">Already have an account? </Text>
-          <Link href="/login" style={{ color: '#1B3A5C', fontWeight: 600 }}>
-            Sign In
+        <div style={{ textAlign: 'center', marginTop: 24, fontSize: 13 }}>
+          <Text type="secondary">Already registered? </Text>
+          <Link href="/login" style={{ color: '#0B2545', fontWeight: 700 }}>
+            Sign In with Campus ID
           </Link>
         </div>
       </Card>

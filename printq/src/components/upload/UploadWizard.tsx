@@ -1,14 +1,15 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Steps, Button, Result, Space, Card, Progress, Typography } from 'antd';
+import { Steps, Button, Result, Space, Card, Progress, Typography, Tag } from 'antd';
 import {
   UploadOutlined,
   SyncOutlined,
   ControlOutlined,
-  CheckCircleOutlined,
   RocketOutlined,
   FileDoneOutlined,
+  EnvironmentOutlined,
+  CheckCircleFilled,
 } from '@ant-design/icons';
 import Link from 'next/link';
 import { useUploadStore } from '@/stores/uploadStore';
@@ -42,18 +43,25 @@ export default function UploadWizard() {
     { title: 'Upload', icon: <UploadOutlined /> },
     { title: 'Analyze', icon: <SyncOutlined spin={isProcessing} /> },
     { title: 'Options', icon: <ControlOutlined /> },
-    { title: 'Pricing', icon: <FileDoneOutlined /> },
-    { title: 'Queued', icon: <RocketOutlined /> },
+    { title: 'Tariff', icon: <FileDoneOutlined /> },
+    { title: 'Token & Queue', icon: <RocketOutlined /> },
   ];
 
   const handlePaymentSuccess = (res: { queuePosition: number; estimatedMinutes: number }) => {
     setQueueResult(res.queuePosition, res.estimatedMinutes);
-    nextStep(); // Advance to Queued step
+    nextStep();
   };
 
   return (
-    <div style={{ maxWidth: 860, margin: '0 auto' }}>
-      <Card style={{ borderRadius: 12, marginBottom: 24 }}>
+    <div style={{ maxWidth: 880, margin: '0 auto' }}>
+      <Card
+        style={{
+          borderRadius: 16,
+          marginBottom: 24,
+          border: '1px solid #E2E8F0',
+          boxShadow: '0 2px 8px rgba(11, 37, 69, 0.04)',
+        }}
+      >
         <Steps current={currentStep} items={steps} />
       </Card>
 
@@ -62,16 +70,31 @@ export default function UploadWizard() {
 
       {/* Step 1: Processing Animation */}
       {currentStep === 1 && (
-        <Card style={{ borderRadius: 12, textAlign: 'center', padding: '48px 24px' }}>
-          <SyncOutlined spin style={{ fontSize: 48, color: '#1B3A5C', marginBottom: 24 }} />
-          <div style={{ fontSize: 18, fontWeight: 600, color: '#1B3A5C', marginBottom: 8 }}>
-            {processingStep || 'Processing your document...'}
+        <Card style={{ borderRadius: 16, textAlign: 'center', padding: '56px 24px', border: '1px solid #E2E8F0' }}>
+          <div
+            style={{
+              width: 72,
+              height: 72,
+              borderRadius: 20,
+              background: '#EEF2F6',
+              display: 'inline-flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#0B2545',
+              fontSize: 32,
+              marginBottom: 20,
+            }}
+          >
+            <SyncOutlined spin />
           </div>
-          <Text type="secondary">
-            Converting formats, calculating total pages, and running color ink coverage analysis.
+          <div style={{ fontSize: 20, fontWeight: 800, color: '#0B2545', marginBottom: 8 }}>
+            {processingStep || 'Processing Document on FISAT Print Spooler...'}
+          </div>
+          <Text type="secondary" style={{ maxWidth: 440, margin: '0 auto', display: 'block', fontSize: 13 }}>
+            Converting file format with LibreOffice headless and executing Ghostscript per-page color ink analysis.
           </Text>
-          <div style={{ maxWidth: 400, margin: '24px auto 0' }}>
-            <Progress percent={processingProgress} status="active" strokeColor="#1B3A5C" />
+          <div style={{ maxWidth: 420, margin: '28px auto 0' }}>
+            <Progress percent={processingProgress} status="active" strokeColor="#0B2545" />
           </div>
         </Card>
       )}
@@ -81,9 +104,16 @@ export default function UploadWizard() {
         <Space direction="vertical" size="large" style={{ width: '100%' }}>
           <PrintOptions />
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Button onClick={prevStep}>Back to Upload</Button>
-            <Button type="primary" onClick={nextStep} style={{ background: '#1B3A5C' }}>
-              Review Cost &amp; Breakdown
+            <Button onClick={prevStep} size="large" style={{ borderRadius: 8 }}>
+              Back to Upload
+            </Button>
+            <Button
+              type="primary"
+              size="large"
+              onClick={nextStep}
+              style={{ background: '#0B2545', borderColor: '#0B2545', borderRadius: 8, fontWeight: 700 }}
+            >
+              Review Tariff &amp; Breakdown
             </Button>
           </div>
         </Space>
@@ -94,12 +124,20 @@ export default function UploadWizard() {
         <Space direction="vertical" size="large" style={{ width: '100%' }}>
           <CostBreakdown />
           <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-            <Button onClick={prevStep}>Back to Options</Button>
+            <Button onClick={prevStep} size="large" style={{ borderRadius: 8 }}>
+              Back to Options
+            </Button>
             <Button
               type="primary"
               size="large"
               onClick={() => setPaymentModalOpen(true)}
-              style={{ background: '#1B3A5C' }}
+              style={{
+                background: '#0B2545',
+                borderColor: '#0B2545',
+                borderRadius: 8,
+                fontWeight: 800,
+                boxShadow: '0 4px 14px rgba(11, 37, 69, 0.25)',
+              }}
             >
               Confirm &amp; Proceed to Payment (₹{costBreakdown?.total.toFixed(2)})
             </Button>
@@ -109,25 +147,46 @@ export default function UploadWizard() {
 
       {/* Step 4: Queued Result */}
       {currentStep >= 4 && (
-        <Card style={{ borderRadius: 12 }}>
+        <Card style={{ borderRadius: 16, border: '1px solid #E2E8F0' }}>
           {jobId && <QueuePosition jobId={jobId} />}
 
           <Result
-            status="success"
-            title="Your Print Job has been Placed in Queue!"
+            icon={<CheckCircleFilled style={{ color: '#10B981', fontSize: 64 }} />}
+            title={
+              <span style={{ color: '#0B2545', fontWeight: 900, fontSize: 24 }}>
+                FISAT Print Token Issued &amp; Queued!
+              </span>
+            }
             subTitle={
-              queuePosition
-                ? `You are #${queuePosition} in line. Estimated pickup in ~${estimatedMinutes || 2} minutes.`
-                : 'Job received and queued.'
+              <div style={{ marginTop: 8, color: '#475569', fontSize: 14 }}>
+                {queuePosition ? (
+                  <>
+                    Your document is in the printer spool at <strong>FCFS Position #{queuePosition}</strong>.
+                    <br />
+                    Estimated printing completion in ~<strong>{estimatedMinutes || 2} minutes</strong>.
+                  </>
+                ) : (
+                  'Your document has been registered in the print queue.'
+                )}
+                <div style={{ marginTop: 12 }}>
+                  <Tag color="blue" icon={<EnvironmentOutlined />} style={{ padding: '4px 12px', fontSize: 13 }}>
+                    Pickup: Counter 1 — Main Block Central Reprographics
+                  </Tag>
+                </div>
+              </div>
             }
             extra={[
               <Link href="/dashboard" key="jobs">
-                <Button type="primary" style={{ background: '#1B3A5C' }}>
-                  Track in My Jobs
+                <Button
+                  type="primary"
+                  size="large"
+                  style={{ background: '#0B2545', borderColor: '#0B2545', borderRadius: 8, fontWeight: 700 }}
+                >
+                  Track in My Print Jobs
                 </Button>
               </Link>,
-              <Button key="another" onClick={reset}>
-                Print Another Document
+              <Button key="another" size="large" onClick={reset} style={{ borderRadius: 8 }}>
+                Print Another File
               </Button>,
             ]}
           />

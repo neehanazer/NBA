@@ -1,14 +1,16 @@
 'use client';
 
 import React from 'react';
-import { Typography, Button, Space, Row, Col, Card, Statistic, Breadcrumb, Empty } from 'antd';
+import { Typography, Button, Space, Row, Col, Card, Statistic, Breadcrumb, Tag, Alert } from 'antd';
 import {
   CloudUploadOutlined,
   HomeOutlined,
   SyncOutlined,
   CheckCircleOutlined,
   ClockCircleOutlined,
-  DollarOutlined,
+  EnvironmentOutlined,
+  BankOutlined,
+  FileDoneOutlined,
 } from '@ant-design/icons';
 import Link from 'next/link';
 import { useJobs } from '@/hooks/useJobs';
@@ -20,7 +22,6 @@ const { Title, Text } = Typography;
 export default function DashboardPage() {
   const { jobs, isLoading, refetch } = useJobs();
 
-  // Find most recent active job in queue
   const activeJob = jobs.find((j) => ['QUEUED', 'PRINTING'].includes(j.status));
 
   const totalSpent = jobs
@@ -40,7 +41,7 @@ export default function DashboardPage() {
         style={{ marginBottom: 16 }}
         items={[
           { title: <Link href="/"><HomeOutlined /> Home</Link> },
-          { title: 'My Print Jobs' },
+          { title: 'My Campus Print Jobs' },
         ]}
       />
 
@@ -49,79 +50,108 @@ export default function DashboardPage() {
           display: 'flex',
           justifyContent: 'space-between',
           alignItems: 'center',
-          marginBottom: 24,
+          marginBottom: 20,
           flexWrap: 'wrap',
           gap: 16,
         }}
       >
         <div>
-          <Title level={2} style={{ color: '#1B3A5C', margin: 0 }}>
-            My Print Jobs
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 4 }}>
+            <span className="fisat-gold-pill">
+              <BankOutlined /> FISAT Reprographics
+            </span>
+            <Tag color="#0B2545" style={{ borderRadius: 6 }}>Counter 1 Spooler</Tag>
+          </div>
+          <Title level={2} style={{ color: '#0B2545', margin: 0, fontWeight: 900 }}>
+            My Print Submissions &amp; Queue
           </Title>
-          <Text type="secondary">Track queue position, download invoices, and view print history.</Text>
+          <Text type="secondary">Track live queue position, collection tokens, and print history.</Text>
         </div>
 
         <Space>
-          <Button icon={<SyncOutlined />} onClick={() => refetch()} loading={isLoading}>
-            Refresh
+          <Button icon={<SyncOutlined />} onClick={() => refetch()} loading={isLoading} size="large" style={{ borderRadius: 8 }}>
+            Refresh Status
           </Button>
           <Link href="/upload">
-            <Button type="primary" icon={<CloudUploadOutlined />} style={{ background: '#1B3A5C' }}>
-              New Print Job
+            <Button
+              type="primary"
+              icon={<CloudUploadOutlined />}
+              size="large"
+              style={{
+                background: '#0B2545',
+                borderColor: '#0B2545',
+                borderRadius: 8,
+                fontWeight: 700,
+                boxShadow: '0 4px 14px rgba(11, 37, 69, 0.25)',
+              }}
+            >
+              Submit New Print Job
             </Button>
           </Link>
         </Space>
       </div>
 
-      {/* Live Queue Widget if currently in queue */}
+      {/* Active Live Queue Card */}
       {activeJob && (
         <div style={{ marginBottom: 24 }}>
-          <Title level={4} style={{ color: '#1B3A5C', marginBottom: 12 }}>
-            Active Print Job in Queue: <span style={{ color: '#1890ff' }}>{activeJob.originalName}</span>
-          </Title>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 10 }}>
+            <span className="fisat-pulse-dot" />
+            <Text strong style={{ color: '#0B2545', fontSize: 15 }}>
+              Active Document in FISAT Spooler: <span style={{ color: '#134074' }}>{activeJob.originalName}</span>
+            </Text>
+          </div>
           <QueuePosition jobId={activeJob.id} />
         </div>
       )}
 
-      {/* Metrics Row */}
+      {/* Summary Metrics Row */}
       <Row gutter={[16, 16]} style={{ marginBottom: 24 }}>
         <Col xs={24} sm={8}>
-          <Card style={{ borderRadius: 12 }}>
+          <Card style={{ borderRadius: 14, border: '1px solid #E2E8F0' }}>
             <Statistic
-              title="Active In Queue"
+              title={<span style={{ fontWeight: 600, color: '#64748B' }}>In Active Spool</span>}
               value={activeJob ? 1 : 0}
-              prefix={<ClockCircleOutlined style={{ color: '#fa8c16' }} />}
-              valueStyle={{ color: activeJob ? '#fa8c16' : '#8c8c8c' }}
+              prefix={<ClockCircleOutlined style={{ color: '#D97706' }} />}
+              valueStyle={{ color: activeJob ? '#D97706' : '#94A3B8', fontWeight: 800 }}
+              suffix={activeJob ? <Tag color="gold" style={{ marginLeft: 8 }}>In Queue</Tag> : null}
             />
           </Card>
         </Col>
 
         <Col xs={12} sm={8}>
-          <Card style={{ borderRadius: 12 }}>
+          <Card style={{ borderRadius: 14, border: '1px solid #E2E8F0' }}>
             <Statistic
-              title="Completed Prints"
+              title={<span style={{ fontWeight: 600, color: '#64748B' }}>Collected Prints</span>}
               value={completedCount}
-              prefix={<CheckCircleOutlined style={{ color: '#52c41a' }} />}
-              valueStyle={{ color: '#389e0d' }}
+              prefix={<CheckCircleOutlined style={{ color: '#10B981' }} />}
+              valueStyle={{ color: '#10B981', fontWeight: 800 }}
             />
           </Card>
         </Col>
 
         <Col xs={12} sm={8}>
-          <Card style={{ borderRadius: 12 }}>
+          <Card style={{ borderRadius: 14, border: '1px solid #E2E8F0' }}>
             <Statistic
-              title="Total Spent"
+              title={<span style={{ fontWeight: 600, color: '#64748B' }}>Total Subsidized Spend</span>}
               value={totalSpent}
               prefix="₹"
               precision={2}
-              valueStyle={{ color: '#1B3A5C', fontWeight: 700 }}
+              valueStyle={{ color: '#0B2545', fontWeight: 800 }}
             />
           </Card>
         </Col>
       </Row>
 
-      {/* Jobs Table */}
-      <Card style={{ borderRadius: 12 }}>
+      {/* Jobs History Table */}
+      <Card
+        title={
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            <FileDoneOutlined style={{ color: '#0B2545' }} />
+            <span style={{ fontWeight: 800, color: '#0B2545' }}>Print Job History &amp; Collection Tokens</span>
+          </div>
+        }
+        style={{ borderRadius: 16, border: '1px solid #E2E8F0' }}
+      >
         <JobsTable
           jobs={jobs}
           loading={isLoading}

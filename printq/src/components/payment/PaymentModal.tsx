@@ -7,6 +7,8 @@ import {
   ShopOutlined,
   CheckCircleFilled,
   SafetyCertificateOutlined,
+  BankOutlined,
+  QrcodeOutlined,
 } from '@ant-design/icons';
 import { useUploadStore } from '@/stores/uploadStore';
 import { api } from '@/lib/api';
@@ -34,7 +36,7 @@ export default function PaymentModal({ open, onClose, onSuccess }: PaymentModalP
     setLoading(true);
     try {
       const res = await api.payForJob(jobId, paymentMethod);
-      message.success('Payment verified! Your document has entered the FCFS queue.');
+      message.success('Payment confirmed! Your document has entered the FISAT print queue.');
       onSuccess({
         queuePosition: (res as any).queuePosition || 1,
         estimatedMinutes: (res as any).estimatedMinutes || 2,
@@ -50,15 +52,32 @@ export default function PaymentModal({ open, onClose, onSuccess }: PaymentModalP
   return (
     <Modal
       title={
-        <Space>
-          <SafetyCertificateOutlined style={{ color: '#1B3A5C' }} />
-          <span>Confirm Payment &amp; Join Queue</span>
-        </Space>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          <div
+            style={{
+              width: 32,
+              height: 32,
+              borderRadius: 8,
+              background: '#0B2545',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              color: '#D4AF37',
+            }}
+          >
+            <BankOutlined />
+          </div>
+          <div>
+            <span style={{ fontSize: 16, fontWeight: 700, color: '#0B2545' }}>
+              Confirm Payment &amp; Obtain Queue Token
+            </span>
+          </div>
+        </div>
       }
       open={open}
       onCancel={onClose}
       footer={[
-        <Button key="cancel" onClick={onClose} disabled={loading}>
+        <Button key="cancel" onClick={onClose} disabled={loading} style={{ borderRadius: 8 }}>
           Cancel
         </Button>,
         <Button
@@ -66,19 +85,26 @@ export default function PaymentModal({ open, onClose, onSuccess }: PaymentModalP
           type="primary"
           loading={loading}
           onClick={handleProcessPayment}
-          style={{ background: '#1B3A5C' }}
+          style={{
+            background: '#0B2545',
+            borderColor: '#0B2545',
+            borderRadius: 8,
+            fontWeight: 700,
+            padding: '0 24px',
+          }}
         >
-          {paymentMethod === 'online' ? `Pay ₹${amount.toFixed(2)} Now` : 'Confirm & Pay at Counter'}
+          {paymentMethod === 'online' ? `Pay ₹${amount.toFixed(2)} Online` : 'Confirm & Pay at Counter'}
         </Button>,
       ]}
+      width={520}
     >
       <div style={{ padding: '8px 0' }}>
         <Alert
-          message="Strict FCFS Queue Policy"
-          description="Your place in line is assigned immediately upon payment confirmation. First come, first served."
+          message="Strict Campus FCFS Order"
+          description="Your position in the FISAT printer spool is assigned upon confirmation. Please ensure your submission is final."
           type="info"
           showIcon
-          style={{ marginBottom: 16 }}
+          style={{ marginBottom: 16, borderRadius: 8 }}
         />
 
         <div
@@ -86,20 +112,24 @@ export default function PaymentModal({ open, onClose, onSuccess }: PaymentModalP
             display: 'flex',
             justifyContent: 'space-between',
             alignItems: 'center',
-            padding: '12px 16px',
-            background: '#f8fafc',
-            borderRadius: 8,
-            marginBottom: 16,
+            padding: '14px 18px',
+            background: '#F8FAFC',
+            borderRadius: 10,
+            border: '1px solid #E2E8F0',
+            marginBottom: 20,
           }}
         >
-          <Text type="secondary">Total Amount Due:</Text>
-          <Title level={3} style={{ margin: 0, color: '#1B3A5C' }}>
+          <div>
+            <Text type="secondary" style={{ fontSize: 13 }}>Total Payable Amount:</Text>
+            <div style={{ fontSize: 11, color: '#64748B' }}>FISAT Student Subsidized Tariff</div>
+          </div>
+          <Title level={3} style={{ margin: 0, color: '#0B2545', fontWeight: 800 }}>
             ₹{amount.toFixed(2)}
           </Title>
         </div>
 
-        <Text strong style={{ display: 'block', marginBottom: 8 }}>
-          Select Payment Option:
+        <Text strong style={{ display: 'block', marginBottom: 10, color: '#0B2545' }}>
+          Select Payment Method:
         </Text>
 
         <Radio.Group
@@ -107,25 +137,26 @@ export default function PaymentModal({ open, onClose, onSuccess }: PaymentModalP
           onChange={(e) => setPaymentMethod(e.target.value)}
           style={{ width: '100%' }}
         >
-          <Space direction="vertical" style={{ width: '100%' }}>
+          <Space direction="vertical" style={{ width: '100%' }} size={12}>
             <Radio
               value="online"
               style={{
                 width: '100%',
-                border: '1px solid #d9d9d9',
-                padding: '12px',
-                borderRadius: 8,
-                background: paymentMethod === 'online' ? '#f0f5ff' : '#fff',
-                borderColor: paymentMethod === 'online' ? '#1B3A5C' : '#d9d9d9',
+                border: paymentMethod === 'online' ? '2px solid #0B2545' : '1px solid #E2E8F0',
+                padding: '14px',
+                borderRadius: 10,
+                background: paymentMethod === 'online' ? '#F0F7FF' : '#FFFFFF',
               }}
             >
               <Space direction="vertical" size={2}>
                 <Space>
-                  <CreditCardOutlined style={{ color: '#1B3A5C' }} />
-                  <Text strong>Instant Online Pay (Simulated / UPI / Card)</Text>
+                  <QrcodeOutlined style={{ color: '#0B2545', fontSize: 16 }} />
+                  <Text strong style={{ color: '#0B2545' }}>
+                    Instant UPI / QR / Net Banking
+                  </Text>
                 </Space>
                 <Text type="secondary" style={{ fontSize: 12 }}>
-                  Immediate verification &amp; priority instant placement into the print queue.
+                  Instant verification. Immediate highest-priority entry into the print queue.
                 </Text>
               </Space>
             </Radio>
@@ -134,20 +165,21 @@ export default function PaymentModal({ open, onClose, onSuccess }: PaymentModalP
               value="counter"
               style={{
                 width: '100%',
-                border: '1px solid #d9d9d9',
-                padding: '12px',
-                borderRadius: 8,
-                background: paymentMethod === 'counter' ? '#f0f5ff' : '#fff',
-                borderColor: paymentMethod === 'counter' ? '#1B3A5C' : '#d9d9d9',
+                border: paymentMethod === 'counter' ? '2px solid #0B2545' : '1px solid #E2E8F0',
+                padding: '14px',
+                borderRadius: 10,
+                background: paymentMethod === 'counter' ? '#F0F7FF' : '#FFFFFF',
               }}
             >
               <Space direction="vertical" size={2}>
                 <Space>
-                  <ShopOutlined style={{ color: '#fa8c16' }} />
-                  <Text strong>Pay at Print Shop Counter</Text>
+                  <ShopOutlined style={{ color: '#D97706', fontSize: 16 }} />
+                  <Text strong style={{ color: '#0B2545' }}>
+                    Pay at Main Block Counter (Cash / UPI)
+                  </Text>
                 </Space>
                 <Text type="secondary" style={{ fontSize: 12 }}>
-                  Pay cash or scanner UPI at the pickup counter when collecting your prints.
+                  Pay in-person at Counter 1 when collecting your printed sheets.
                 </Text>
               </Space>
             </Radio>
