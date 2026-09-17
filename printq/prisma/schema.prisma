@@ -1,0 +1,90 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  STUDENT
+  OPERATOR
+  ADMIN
+}
+
+enum JobStatus {
+  UPLOADED
+  CONVERTING
+  ANALYZED
+  PRICED
+  QUEUED
+  PRINTING
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  email     String   @unique
+  name      String
+  password  String
+  phone     String?
+  role      Role     @default(STUDENT)
+  jobs      Job[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Job {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  userId        String    @db.ObjectId
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  originalFile  String
+  originalName  String
+  convertedPdf  String?
+  fileSize      Int?
+  pageCount     Int?
+  colorPages    Int[]
+  bwPages       Int?
+  duplex        Boolean   @default(false)
+  copies        Int       @default(1)
+  status        JobStatus @default(UPLOADED)
+  cost          Float?
+  costBreakdown Json?
+  paid          Boolean   @default(false)
+  paymentMethod String?
+  paymentId     String?
+  queuePosition Int?
+  printJobId    String?
+  errorMessage  String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  completedAt   DateTime?
+  fileExpiresAt DateTime?
+}
+
+model PricingConfig {
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  ratePerPageBW    Float    @default(2.0)
+  ratePerPageColor Float    @default(5.0)
+  duplexDiscount   Float    @default(0.1)
+  currency         String   @default("INR")
+  currencySymbol   String   @default("₹")
+  isActive         Boolean  @default(true)
+  updatedAt        DateTime @updatedAt
+  updatedBy        String?  @db.ObjectId
+}
+
+model Notification {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  jobId     String    @db.ObjectId
+  userId    String    @db.ObjectId
+  channel   String
+  type      String
+  message   String
+  sent      Boolean   @default(false)
+  sentAt    DateTime?
+  createdAt DateTime  @default(now())
+}
