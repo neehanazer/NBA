@@ -1,41 +1,37 @@
-@import url('https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700;800;900&family=Open+Sans:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800;900&family=Roboto:wght@300;400;500;700&family=Ubuntu:wght@300;400;500;700&family=Open+Sans:wght@300;400;600;700&display=swap');
 
 :root {
-  /* Arsha Global Color Tokens */
-  --arsha-primary: #37517e;
-  --arsha-primary-dark: #2a3d5e;
-  --arsha-accent: #47b2e4;
-  --arsha-accent-hover: #209dd8;
-  --arsha-bg: #f3f5fa;
-  --arsha-surface: #ffffff;
-  --arsha-text: #444444;
-  --arsha-heading: #37517e;
-  --arsha-contrast: #ffffff;
+  /* Strive Template Design Tokens */
+  --strive-primary: #ea7c00;
+  --strive-primary-hover: #d46f00;
+  --strive-primary-light: #fff5eb;
+  --strive-dark: #060606;
+  --strive-dark-surface: #181818;
+  --strive-light: #f5f2ef;
+  --strive-heading: #282828;
+  --strive-text: #444444;
+  --strive-muted: #777777;
+  --strive-border: #e8e3df;
 
   /* Fonts */
-  --font-heading: 'Jost', sans-serif;
-  --font-body: 'Open Sans', sans-serif;
-  --font-nav: 'Poppins', sans-serif;
+  --font-heading: 'Nunito', sans-serif;
+  --font-nav: 'Ubuntu', sans-serif;
+  --font-body: 'Roboto', sans-serif;
 
-  /* Legacy FISAT Tokens (mapped for backwards compatibility) */
-  --fisat-navy: #37517e;
-  --fisat-navy-deep: #2a3d5e;
-  --fisat-blue: #47b2e4;
-  --fisat-blue-accent: #209dd8;
-  --fisat-gold: #47b2e4;
-  --fisat-gold-light: #e7f5fb;
-  --fisat-amber: #d97706;
-  --fisat-bg: #f3f5fa;
+  /* Legacy FISAT / Ant Design compatibility */
+  --fisat-navy: #060606;
+  --fisat-blue: #ea7c00;
+  --fisat-gold: #ea7c00;
+  --fisat-bg: #f5f2ef;
   --fisat-surface: #ffffff;
-  --fisat-border: #e2e8f0;
-  --fisat-text-primary: #37517e;
-  --fisat-text-secondary: #5e6e82;
-  --fisat-text-muted: #8492a6;
+  --fisat-border: #e8e3df;
+  --fisat-text-primary: #282828;
+  --fisat-text-secondary: #555555;
   
-  --shadow-sm: 0 1px 2px 0 rgba(55, 81, 126, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(55, 81, 126, 0.08), 0 2px 4px -2px rgba(55, 81, 126, 0.04);
-  --shadow-lg: 0 10px 25px -3px rgba(55, 81, 126, 0.12), 0 4px 6px -4px rgba(55, 81, 126, 0.06);
-  --shadow-glow: 0 0 25px rgba(71, 178, 228, 0.35);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 5px 15px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 12px 30px rgba(0, 0, 0, 0.12);
+  --shadow-orange: 0 8px 25px rgba(234, 124, 0, 0.35);
 }
 
 * {
@@ -48,16 +44,226 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
-  background-color: var(--arsha-bg);
-  color: var(--arsha-text);
-  font-family: 'Open Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: var(--strive-light);
+  color: var(--strive-text);
+  font-family: 'Roboto', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Jost', sans-serif;
-  color: var(--arsha-heading);
+  font-family: 'Nunito', sans-serif;
+  color: var(--strive-heading);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* Strive Section Titles */
+.strive-section-title {
+  text-align: center;
+  padding-bottom: 48px;
+  position: relative;
+}
+
+.strive-section-title h2 {
+  font-family: 'Nunito', sans-serif;
+  font-size: 30px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--strive-heading);
+  margin-bottom: 8px;
+  position: relative;
+}
+
+.strive-section-title h2::after {
+  content: "";
+  display: block;
+  width: 70px;
+  height: 3px;
+  background: var(--strive-primary);
+  margin: 12px auto 0;
+  border-radius: 2px;
+}
+
+.strive-section-title p {
+  color: var(--strive-muted);
+  font-size: 15px;
+  max-width: 620px;
+  margin: 10px auto 0;
+  font-family: 'Roboto', sans-serif;
+}
+
+/* Strive Buttons */
+.btn-strive-primary {
+  color: #ffffff !important;
+  background: var(--strive-primary) !important;
+  border: 2px solid var(--strive-primary) !important;
+  font-family: 'Ubuntu', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 15px !important;
+  letter-spacing: 0.5px !important;
+  padding: 12px 36px !important;
+  border-radius: 50px !important;
+  transition: all 0.3s ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-shadow: 0 6px 20px rgba(234, 124, 0, 0.35) !important;
+}
+
+.btn-strive-primary:hover {
+  background: var(--strive-primary-hover) !important;
+  border-color: var(--strive-primary-hover) !important;
+  color: #ffffff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(234, 124, 0, 0.45) !important;
+}
+
+.btn-strive-outline {
+  color: #ffffff !important;
+  background: transparent !important;
+  border: 2px solid rgba(255, 255, 255, 0.6) !important;
+  font-family: 'Ubuntu', sans-serif !important;
+  font-weight: 600 !important;
+  font-size: 15px !important;
+  letter-spacing: 0.5px !important;
+  padding: 12px 32px !important;
+  border-radius: 50px !important;
+  transition: all 0.3s ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+}
+
+.btn-strive-outline:hover {
+  border-color: var(--strive-primary) !important;
+  color: var(--strive-primary) !important;
+  background: rgba(234, 124, 0, 0.1) !important;
+  transform: translateY(-2px);
+}
+
+/* Strive Service / Feature Cards */
+.strive-card {
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 36px 28px;
+  box-shadow: 0px 5px 25px 0px rgba(0, 0, 0, 0.06);
+  transition: all 0.35s ease;
+  border: 1px solid var(--strive-border);
+  height: 100%;
+}
+
+.strive-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.1);
+  border-color: var(--strive-primary);
+}
+
+.strive-icon-box {
+  width: 58px;
+  height: 58px;
+  border-radius: 12px;
+  background: var(--strive-primary-light);
+  color: var(--strive-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  transition: all 0.3s ease;
+  margin-bottom: 22px;
+}
+
+.strive-card:hover .strive-icon-box {
+  background: var(--strive-primary);
+  color: #ffffff;
+}
+
+/* Strive Badges */
+.strive-stat-badge {
+  background: var(--strive-primary);
+  color: #ffffff;
+  border-radius: 12px;
+  padding: 16px 24px;
+  box-shadow: 0 10px 25px rgba(234, 124, 0, 0.35);
+  display: inline-block;
+  text-align: center;
+}
+
+/* Strive Hero Container */
+.strive-hero-container {
+  background: #060606;
+  border-radius: 24px;
+  padding: 80px 48px 72px;
+  color: #ffffff;
+  margin-bottom: 48px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.strive-hero-glow {
+  position: absolute;
+  top: -80px;
+  right: -80px;
+  width: 550px;
+  height: 550px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(234, 124, 0, 0.22) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* Strive Pricing Cards */
+.strive-pricing-card {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 36px 30px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.05);
+  border: 1px solid var(--strive-border);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.strive-pricing-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 35px rgba(234, 124, 0, 0.12);
+  border-color: var(--strive-primary);
+}
+
+.strive-pricing-featured {
+  border-top: 4px solid var(--strive-primary) !important;
+  box-shadow: 0 12px 35px rgba(234, 124, 0, 0.15) !important;
+}
+
+/* Strive CTA Block */
+.strive-cta-banner {
+  background: #060606;
+  border-radius: 20px;
+  padding: 56px 40px;
+  color: #ffffff;
+  text-align: center;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(234, 124, 0, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+.strive-cta-banner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, #ea7c00, #ffb366, #ea7c00);
 }
 
 a {

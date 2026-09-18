@@ -27,10 +27,10 @@ export default function Providers({ children }: { children: React.ReactNode }) {
             theme={{
               algorithm: antdTheme.defaultAlgorithm,
               token: {
-                colorPrimary: '#47b2e4', // Arsha Sky Blue Accent
-                colorInfo: '#37517e', // Arsha Deep Indigo Heading
+                colorPrimary: '#ea7c00', // Strive Signature Orange
+                colorInfo: '#282828', // Strive Charcoal
                 colorSuccess: '#10B981', // Success Emerald
-                colorWarning: '#D97706', // Amber Warning
+                colorWarning: '#ea7c00', // Strive Accent
                 colorError: '#EF4444',
                 colorTextBase: '#444444',
                 colorBgBase: '#FFFFFF',
@@ -38,7 +38,7 @@ export default function Providers({ children }: { children: React.ReactNode }) {
                 borderRadiusLG: 14,
                 borderRadiusSM: 6,
                 fontFamily:
-                  "'Open Sans', 'Jost', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+                  "'Roboto', 'Nunito', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif",
               },
               components: {
                 Button: {
@@ -46,27 +46,27 @@ export default function Providers({ children }: { children: React.ReactNode }) {
                   borderRadius: 8,
                   fontWeight: 600,
                   primaryColor: '#FFFFFF',
-                  primaryShadow: '0 4px 15px 0 rgba(71, 178, 228, 0.35)',
+                  primaryShadow: '0 4px 15px 0 rgba(234, 124, 0, 0.35)',
                 },
                 Table: {
                   headerBg: '#F8FAFC',
-                  headerColor: '#37517e',
-                  rowHoverBg: '#F1F5F9',
-                  borderColor: '#E2E8F0',
+                  headerColor: '#282828',
+                  rowHoverBg: '#F5F2EF',
+                  borderColor: '#E8E3DF',
                 },
                 Steps: {
-                  colorPrimary: '#47b2e4',
+                  colorPrimary: '#ea7c00',
                   iconSize: 36,
                 },
                 Card: {
                   borderRadiusLG: 14,
                   headerFontSize: 16,
-                  colorBorderSecondary: '#E2E8F0',
+                  colorBorderSecondary: '#E8E3DF',
                 },
                 Tabs: {
-                  itemSelectedColor: '#37517e',
-                  inkBarColor: '#47b2e4',
-                  itemHoverColor: '#47b2e4',
+                  itemSelectedColor: '#ea7c00',
+                  inkBarColor: '#ea7c00',
+                  itemHoverColor: '#ea7c00',
                 },
               },
             }}
